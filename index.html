@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Shivakrisna Photography 
-<p style="font-size:18px; margin-top:5px; color:#555;">📞 Cell :- 9553272893</p></title>
+<title>Shivakrisna Photography</title>
 
 <style>
 body { font-family: Arial; background:#fff; padding:20px; text-align:center; }
@@ -36,7 +35,6 @@ button {
 
 .cart { background:#eee; padding:20px; border-radius:15px; margin-top:30px; }
 
-/* FORM */
 #formBox {
 display:none;
 position:fixed;
@@ -58,6 +56,7 @@ input { width:90%; padding:8px; margin:5px; }
 <body>
 
 <h1>📸 Shivakrisna Photography</h1>
+<p style="font-size:18px; color:#555;">📞 Cell :- 9553272893</p>
 
 <h2>💍 Wedding Packages</h2>
 <div id="wedding" class="grid"></div>
@@ -101,7 +100,7 @@ input { width:90%; padding:8px; margin:5px; }
 
 <script>
 
-// ===== PACKAGES (22) =====
+// ===== 22 PACKAGES =====
 
 const wedding = [
 {title:"Package 1 ₹49,000",price:49000,details:["Bride,Groom,Wedding Traditional","50 Sheets"]},
@@ -137,7 +136,7 @@ const cradle = [
 {title:"Package 22 ₹39,999",price:39999,details:["Candid + Cinematic"]}
 ];
 
-// CUSTOMIZE
+// CUSTOM
 const custom = [
 {name:"Album Sheets",price:500},
 {name:"Traditional Photography",price:5000},
@@ -153,7 +152,7 @@ const custom = [
 
 let cart=[];
 
-// ===== RENDER =====
+// RENDER
 function render(list,id){
 let html="";
 list.forEach((p,i)=>{
@@ -172,25 +171,25 @@ ${p.details.map(d=>`<p>• ${d}</p>`).join("")}
 document.getElementById(id).innerHTML=html;
 }
 
-// ===== TOGGLE =====
+// TOGGLE
 function toggle(id){
 let el=document.getElementById(id);
 el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
-// ===== ADD =====
+// ADD
 function add(name,price){
 cart.push({name,price});
 updateCart();
 }
 
-// ===== REMOVE =====
+// REMOVE
 function removeItem(i){
 cart.splice(i,1);
 updateCart();
 }
 
-// ===== CART =====
+// CART
 function updateCart(){
 let html=""; let total=0;
 
@@ -206,7 +205,7 @@ document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
 }
 
-// ===== CUSTOM =====
+// CUSTOM
 function renderCustom(){
 let html="";
 custom.forEach((c,i)=>{
@@ -227,13 +226,12 @@ cart.push({name:custom[i].name,price:custom[i].price*qty});
 updateCart();
 }
 
-// ===== FORM =====
+// FORM
 function openForm(){ document.getElementById("formBox").style.display="block"; }
 function closeForm(){ document.getElementById("formBox").style.display="none"; }
 
-// ===== WHATSAPP =====
+// WHATSAPP
 function sendWhatsApp(){
-
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let location=document.getElementById("location").value;
@@ -247,7 +245,7 @@ cart.forEach(c=>{
 cartText+=c.name+" - ₹"+c.price+"%0A";
 });
 
-let msg=`Booking Details%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0ABride:${bride}%0AGroom:${groom}%0AWedding:${wed}%0AReception:${rec}%0A%0ASelected Packages:%0A${cartText}`;
+let msg=`Booking Details%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0ABride:${bride}%0AGroom:${groom}%0AWedding:${wed}%0AReception:${rec}%0A%0A${cartText}`;
 
 window.open("https://wa.me/919553272893?text="+msg,"_blank");
 }
