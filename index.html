@@ -4,28 +4,60 @@
 <title>Shivakrisna Photography</title>
 
 <style>
-body { font-family: Arial; margin:0; background:white; color:black; text-align:center; }
-.section { padding:30px; }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin:0;
+  background:#fafafa;
+  color:#111;
+  text-align:center;
+}
+
+h1 {color:#b8860b;}
+
+.section { padding:40px; }
 
 .card {
-  background:#f5f5f5;
-  margin:10px;
-  padding:15px;
-  border-radius:10px;
+  background:white;
+  margin:15px;
+  padding:20px;
+  border-radius:15px;
   display:inline-block;
-  width:300px;
+  width:320px;
   text-align:left;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 button {
-  background:gold;
+  background:#b8860b;
+  color:white;
   border:none;
-  padding:8px;
+  padding:10px;
+  border-radius:8px;
   cursor:pointer;
   margin-top:5px;
 }
 
-.details { display:none; font-size:14px; margin-top:10px; }
+.details {
+  display:none;
+  margin-top:10px;
+  font-size:14px;
+  color:#333;
+}
+
+/* FORM */
+#formBox {
+display:none;
+position:fixed;
+top:10%;
+left:50%;
+transform:translateX(-50%);
+background:white;
+padding:20px;
+border-radius:15px;
+width:320px;
+box-shadow:0 0 15px rgba(0,0,0,0.3);
+z-index:999;
+}
 </style>
 
 </head>
@@ -45,43 +77,63 @@ button {
 <h2>🛒 Your Package</h2>
 <div id="cart"></div>
 <h3 id="total">Total ₹0</h3>
+<button onclick="openForm()">Checkout</button>
+</div>
+
+<!-- FORM -->
+<div id="formBox">
+<h3>Booking Details</h3>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Mobile"><br><br>
+<input id="location" placeholder="Location"><br><br>
+
+<input id="bride" placeholder="Bride Date"><br><br>
+<input id="groom" placeholder="Groom Date"><br><br>
+<input id="wed" placeholder="Wedding Date"><br><br>
+<input id="rec" placeholder="Reception Date"><br><br>
+
+<button onclick="sendWhatsApp()">Submit</button>
+<button onclick="closeForm()">Close</button>
 </div>
 
 <script>
 
-// 🔥 WEDDING (1–10)
+// 🔥 FULL 22 PACKAGES (CLEANED + EXACT)
+
+// WEDDING (1–10)
 const wedding = [
-{name:"Package 1 (Basic)",price:49000,detail:"50 Sheets",full:"Bride + Groom + Wedding Traditional"},
-{name:"Package 2 (Basic to Advance)",price:74999,detail:"50 Sheets",full:"Traditional + Candid + Cinematic"},
-{name:"Package 3 (Advance Plus)",price:143999,detail:"80 Sheets",full:"Candid + Cinematic + LED + Drone"},
-{name:"Package 4 (Advance Pro)",price:114999,detail:"80 Sheets",full:"Pre Wedding + Full Coverage"},
-{name:"Package 5 (Pro Max)",price:129999,detail:"80 Sheets",full:"Reception Included"},
-{name:"Package 6 (Advanced)",price:167999,detail:"100 Sheets",full:"LED + Drone + Reception"},
-{name:"Package 7 (Advanced Pro)",price:192999,detail:"100 Sheets",full:"Cinematic + Candid"},
-{name:"Package 8 (Premium)",price:241999,detail:"100 Sheets",full:"Full Premium Coverage"},
-{name:"Package 9 (Premium)",price:261999,detail:"100 Sheets",full:"Live Streaming"},
-{name:"Package 10 (Premium Pro)",price:279999,detail:"100 Sheets",full:"Engagement + Full Coverage"}
+{name:"Package 1 Basic",price:49000,detail:"50 Sheets",full:"Bride + Groom + Wedding Traditional Coverage"},
+{name:"Package 2 Basic to Advance",price:74999,detail:"50 Sheets",full:"Traditional + Candid + Cinematic"},
+{name:"Package 3 Advance Plus",price:143999,detail:"80 Sheets",full:"LED + Drone + Cinematic"},
+{name:"Package 4 Advance Pro",price:114999,detail:"80 Sheets",full:"Pre Wedding + Full Coverage"},
+{name:"Package 5 Pro Max",price:129999,detail:"80 Sheets",full:"Reception Included"},
+{name:"Package 6 Advanced",price:167999,detail:"100 Sheets",full:"LED + Drone + Reception"},
+{name:"Package 7 Advanced Pro",price:192999,detail:"100 Sheets",full:"Candid + Cinematic + Drone"},
+{name:"Package 8 Premium",price:241999,detail:"100 Sheets",full:"Full Premium Coverage"},
+{name:"Package 9 Premium+",price:261999,detail:"100 Sheets",full:"Live Streaming Included"},
+{name:"Package 10 Premium Pro",price:279999,detail:"100 Sheets",full:"Engagement + Full Coverage"}
 ];
 
-// 🎉 BIRTHDAY (11–14)
+// BIRTHDAY (11–14)
 const birthday = [
 {name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional Coverage"},
-{name:"Basic to Advance",price:29999,detail:"30 Sheets",full:"Baby Shoot"},
+{name:"Basic to Advance",price:29999,detail:"30 Sheets",full:"Baby Shoot Included"},
 {name:"Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
 {name:"Premium",price:69999,detail:"30 Sheets",full:"Candid + Cinematic"}
 ];
 
-// 👶 CRADLE (21–22)
+// CRADLE (21–22)
 const cradle = [
 {name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional"},
 {name:"Premium",price:39999,detail:"30 Sheets",full:"Candid + Cinematic"}
 ];
 
-// 👗 SAREE (15–20)
+// SAREE (15–20)
 const saree = [
 {name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional"},
-{name:"Basic 2",price:29999,detail:"30 Sheets",full:"Haldi + Function"},
-{name:"Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
+{name:"Basic",price:29999,detail:"30 Sheets",full:"Haldi + Function"},
+{name:"Basic to Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
 {name:"Advance",price:71999,detail:"50 Sheets",full:"LED + Drone"},
 {name:"Advance Plus",price:96999,detail:"50 Sheets",full:"Candid + Cinematic"},
 {name:"Premium",price:121999,detail:"50 Sheets",full:"Full Coverage"}
@@ -89,21 +141,21 @@ const saree = [
 
 // CUSTOM
 const custom = [
-{name:"Album Sheets (₹500 per sheet)",price:500},
-{name:"Traditional Photography (per day)",price:5000},
-{name:"Traditional Video (per day)",price:7000},
-{name:"Drone (per day)",price:8000},
-{name:"LED Screen (per day)",price:12000},
-{name:"Pre Wedding Shoot (per day)",price:30000},
-{name:"Cinematic Video (per day)",price:15000},
-{name:"Candid Photography (per day)",price:10000},
-{name:"Baby Shoot (per day)",price:25000},
-{name:"Half Saree/Dothi (per day)",price:28000}
+{name:"Album Sheets (₹500)",price:500},
+{name:"Traditional Photography (₹5000)",price:5000},
+{name:"Traditional Video (₹7000)",price:7000},
+{name:"Drone (₹8000)",price:8000},
+{name:"LED Screen (₹12000)",price:12000},
+{name:"Pre Wedding Shoot (₹30000)",price:30000},
+{name:"Cinematic Video (₹15000)",price:15000},
+{name:"Candid Photography (₹10000)",price:10000},
+{name:"Baby Shoot (₹25000)",price:25000},
+{name:"Half Saree/Dothi (₹28000)",price:28000}
 ];
 
 let cart=[];
 
-// RENDER FUNCTION
+// RENDER
 function render(list,id){
 let html="";
 list.forEach((p,i)=>{
@@ -122,7 +174,6 @@ html+=`
 document.getElementById(id).innerHTML=html;
 }
 
-// CUSTOM
 function renderCustom(){
 let html="";
 custom.forEach((c,i)=>{
@@ -137,13 +188,12 @@ html+=`
 document.getElementById("custom").innerHTML=html;
 }
 
-// TOGGLE
+// LOGIC
 function toggle(id){
 let el=document.getElementById(id);
 el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
-// ADD
 function add(name,price){
 cart.push({name,price,qty:1});
 update();
@@ -155,7 +205,6 @@ cart.push({name:custom[i].name,price:custom[i].price,qty:qty});
 update();
 }
 
-// UPDATE CART
 function update(){
 let html=""; let total=0;
 
@@ -167,6 +216,19 @@ html+=`<p>${c.name} x ${c.qty} = ₹${sub}</p>`;
 
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
+}
+
+// FORM
+function openForm(){document.getElementById("formBox").style.display="block";}
+function closeForm(){document.getElementById("formBox").style.display="none";}
+
+function sendWhatsApp(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let location=document.getElementById("location").value;
+
+let msg=`Booking Details%0AName:${name}%0APhone:${phone}%0ALocation:${location}`;
+window.open("https://wa.me/919553272893?text="+msg,"_blank");
 }
 
 // INIT
