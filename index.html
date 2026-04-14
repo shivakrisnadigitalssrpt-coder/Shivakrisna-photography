@@ -13,7 +13,7 @@ body { font-family: Arial; margin:0; background:white; color:black; text-align:c
   padding:15px;
   border-radius:10px;
   display:inline-block;
-  width:260px;
+  width:300px;
   text-align:left;
 }
 
@@ -25,11 +25,7 @@ button {
   margin-top:5px;
 }
 
-.details {
-  display:none;
-  font-size:14px;
-  margin-top:10px;
-}
+.details { display:none; font-size:14px; margin-top:10px; }
 </style>
 
 </head>
@@ -39,38 +35,38 @@ button {
 <h1>📸 Shivakrisna Photography</h1>
 <h3>📞 9553272893</h3>
 
-<div class="section"><h2>💍 Wedding Packages</h2><div id="wedding"></div></div>
-<div class="section"><h2>👶 Cradle Packages</h2><div id="cradle"></div></div>
+<div class="section"><h2>💍 Wedding Packages (Starting ₹50,000)</h2><div id="wedding"></div></div>
+<div class="section"><h2>👶 Cradle Ceremony Packages</h2><div id="cradle"></div></div>
 <div class="section"><h2>🎉 Birthday Packages</h2><div id="birthday"></div></div>
-<div class="section"><h2>👗 Saree/Dothi Packages</h2><div id="saree"></div></div>
-<div class="section"><h2>✨ Customize</h2><div id="custom"></div></div>
+<div class="section"><h2>👗 Saree / Dothi Ceremony Packages</h2><div id="saree"></div></div>
+<div class="section"><h2>✨ Customize Your Package</h2><div id="custom"></div></div>
 
 <div class="section">
-<h2>🛒 Cart</h2>
+<h2>🛒 Your Package</h2>
 <div id="cart"></div>
 <h3 id="total">Total ₹0</h3>
 </div>
 
 <script>
 
-// 🔥 WEDDING (1–10 FULL)
+// 🔥 WEDDING (1–10)
 const wedding = [
-{name:"Package 1 Basic",price:49000,detail:"50 Sheets",full:"Bride + Groom + Wedding Traditional"},
-{name:"Package 2 Basic to Advance",price:74999,detail:"50 Sheets",full:"Traditional + Candid + Cinematic"},
-{name:"Package 3 Advance Plus",price:143999,detail:"80 Sheets",full:"Candid + Cinematic + LED + Drone"},
-{name:"Package 4 Advance Pro",price:114999,detail:"80 Sheets",full:"Pre Wedding + Full Coverage"},
-{name:"Package 5 Pro Max",price:129999,detail:"80 Sheets",full:"Reception included"},
-{name:"Package 6 Advanced",price:167999,detail:"100 Sheets",full:"LED + Drone + Reception"},
-{name:"Package 7 Advanced Pro",price:192999,detail:"100 Sheets",full:"Cinematic + Candid + Drone"},
-{name:"Package 8 Premium",price:241999,detail:"100 Sheets",full:"Full Premium Coverage"},
-{name:"Package 9 Premium+",price:261999,detail:"100 Sheets",full:"Live Streaming Included"},
-{name:"Package 10 Premium Pro",price:279999,detail:"100 Sheets",full:"Engagement + Full Coverage"}
+{name:"Package 1 (Basic)",price:49000,detail:"50 Sheets",full:"Bride + Groom + Wedding Traditional"},
+{name:"Package 2 (Basic to Advance)",price:74999,detail:"50 Sheets",full:"Traditional + Candid + Cinematic"},
+{name:"Package 3 (Advance Plus)",price:143999,detail:"80 Sheets",full:"Candid + Cinematic + LED + Drone"},
+{name:"Package 4 (Advance Pro)",price:114999,detail:"80 Sheets",full:"Pre Wedding + Full Coverage"},
+{name:"Package 5 (Pro Max)",price:129999,detail:"80 Sheets",full:"Reception Included"},
+{name:"Package 6 (Advanced)",price:167999,detail:"100 Sheets",full:"LED + Drone + Reception"},
+{name:"Package 7 (Advanced Pro)",price:192999,detail:"100 Sheets",full:"Cinematic + Candid"},
+{name:"Package 8 (Premium)",price:241999,detail:"100 Sheets",full:"Full Premium Coverage"},
+{name:"Package 9 (Premium)",price:261999,detail:"100 Sheets",full:"Live Streaming"},
+{name:"Package 10 (Premium Pro)",price:279999,detail:"100 Sheets",full:"Engagement + Full Coverage"}
 ];
 
 // 🎉 BIRTHDAY (11–14)
 const birthday = [
 {name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional Coverage"},
-{name:"Basic to Advance",price:29999,detail:"30 Sheets",full:"Baby Shoot Included"},
+{name:"Basic to Advance",price:29999,detail:"30 Sheets",full:"Baby Shoot"},
 {name:"Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
 {name:"Premium",price:69999,detail:"30 Sheets",full:"Candid + Cinematic"}
 ];
@@ -84,7 +80,7 @@ const cradle = [
 // 👗 SAREE (15–20)
 const saree = [
 {name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional"},
-{name:"Basic",price:29999,detail:"30 Sheets",full:"Haldi + Function"},
+{name:"Basic 2",price:29999,detail:"30 Sheets",full:"Haldi + Function"},
 {name:"Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
 {name:"Advance",price:71999,detail:"50 Sheets",full:"LED + Drone"},
 {name:"Advance Plus",price:96999,detail:"50 Sheets",full:"Candid + Cinematic"},
@@ -93,21 +89,21 @@ const saree = [
 
 // CUSTOM
 const custom = [
-{name:"Album Sheets",price:500},
-{name:"Traditional Photography",price:5000},
-{name:"Traditional Video",price:7000},
-{name:"Drone",price:8000},
-{name:"LED Screen",price:12000},
-{name:"Pre Wedding",price:30000},
-{name:"Cinematic Video",price:15000},
-{name:"Candid Photography",price:10000},
-{name:"Baby Shoot",price:25000},
-{name:"Half Saree/Dothi",price:28000}
+{name:"Album Sheets (₹500 per sheet)",price:500},
+{name:"Traditional Photography (per day)",price:5000},
+{name:"Traditional Video (per day)",price:7000},
+{name:"Drone (per day)",price:8000},
+{name:"LED Screen (per day)",price:12000},
+{name:"Pre Wedding Shoot (per day)",price:30000},
+{name:"Cinematic Video (per day)",price:15000},
+{name:"Candid Photography (per day)",price:10000},
+{name:"Baby Shoot (per day)",price:25000},
+{name:"Half Saree/Dothi (per day)",price:28000}
 ];
 
 let cart=[];
 
-// RENDER
+// RENDER FUNCTION
 function render(list,id){
 let html="";
 list.forEach((p,i)=>{
@@ -116,8 +112,10 @@ html+=`
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
 <p>${p.detail}</p>
+
 <button onclick="toggle('${id}${i}')">Details</button>
 <button onclick="add('${p.name}',${p.price})">Add</button>
+
 <div id="${id}${i}" class="details">${p.full}</div>
 </div>`;
 });
@@ -133,7 +131,7 @@ html+=`
 <h3>${c.name}</h3>
 <p>₹${c.price}</p>
 <input id="q${i}" value="1">
-<button onclick="addC(${i})">Add</button>
+<button onclick="addCustom(${i})">Add</button>
 </div>`;
 });
 document.getElementById("custom").innerHTML=html;
@@ -146,21 +144,27 @@ el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
 // ADD
-function add(n,p){cart.push({n,p,q:1});update();}
-function addC(i){
-let q=document.getElementById("q"+i).value;
-cart.push({n:custom[i].name,p:custom[i].price,q:q});
+function add(name,price){
+cart.push({name,price,qty:1});
 update();
 }
 
-// UPDATE
+function addCustom(i){
+let qty=document.getElementById("q"+i).value;
+cart.push({name:custom[i].name,price:custom[i].price,qty:qty});
+update();
+}
+
+// UPDATE CART
 function update(){
-let html="";let total=0;
+let html=""; let total=0;
+
 cart.forEach(c=>{
-let s=c.p*c.q;
-total+=s;
-html+=`<p>${c.n} x ${c.q} = ₹${s}</p>`;
+let sub=c.price*c.qty;
+total+=sub;
+html+=`<p>${c.name} x ${c.qty} = ₹${sub}</p>`;
 });
+
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
 }
