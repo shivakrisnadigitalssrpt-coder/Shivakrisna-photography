@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shivakrisna Photography</title>
+<title>Shivakrisna Photography</title>
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:black;
+  color:white;
+  text-align:center;
+}
+.hero {
+  padding:100px 20px;
+  background:url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486') center/cover;
+}
+h1 {font-size:40px;}
+.gallery img {
+  width:200px;
+  margin:10px;
+  border-radius:10px;
+}
+.packages {
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.card {
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  width:200px;
+}
+button {
+  background:gold;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+}
+.whatsapp {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:green;
+  color:white;
+  padding:15px;
+  border-radius:50%;
+}
+</style>
 </head>
-<body style="font-family: Arial; text-align:center; padding:50px;">
+
+<body>
+
+<div class="hero">
   <h1>📸 Shivakrisna Photography</h1>
-  <p>Wedding | Birthday | Cradle | Saree Ceremony</p>
-  <h2>Packages Available</h2>
-  <p>Contact: +91 9553272893</p>
+  <p>Wedding | Birthday | Cradle | Saree</p>
+</div>
+
+<h2>📸 Gallery</h2>
+<div class="gallery">
+  <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+  <img src="https://images.unsplash.com/photo-1529634893364-88c1b2e7f0c6">
+</div>
+
+<h2>💰 Packages</h2>
+<div class="packages">
+  <div class="card">
+    <h3>Basic</h3>
+    <p>₹10,000</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="card">
+    <h3>Premium</h3>
+    <p>₹25,000</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="card">
+    <h3>Cinematic</h3>
+    <p>₹50,000</p>
+    <button>Add to Cart</button>
+  </div>
+</div>
+
+<h2>📞 Contact</h2>
+<p>+91 9553272893</p>
+
+<a class="whatsapp" href="https://wa.me/919553272893">💬</a>
+
 </body>
 </html>
