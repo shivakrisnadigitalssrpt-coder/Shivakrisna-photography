@@ -1,96 +1,117 @@
-import React, { useState } from "react";
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shivakrisna Photography</title>
 
-export default function App() {
-
-  const [openId, setOpenId] = useState(null);
-
-  const packages = [
-    {
-      id: 1,
-      title: "Package 1 (Basic)",
-      price: "₹49,000",
-      sheets: "50 Sheets",
-      details: [
-        "Bride: Traditional Photography & Videography",
-        "Groom: Traditional Photography & Videography",
-        "Wedding: Traditional Photography & Videography"
-      ]
-    },
-    {
-      id: 2,
-      title: "Package 2 (Basic To Advance)",
-      price: "₹74,999",
-      sheets: "50 Sheets",
-      details: [
-        "Bride: Traditional Photography & Videography",
-        "Groom: Traditional Photography & Videography",
-        "Wedding: Traditional + Candid + Cinematic"
-      ]
-    },
-    {
-      id: 3,
-      title: "Package 3 (Premium)",
-      price: "₹89,999",
-      sheets: "80 Sheets",
-      details: [
-        "Wedding: Candid + Cinematic + Drone + LED"
-      ]
+  <style>
+    body {
+      font-family: Arial;
+      background: #ffffff;
+      padding: 20px;
+      text-align: center;
     }
-  ];
 
-  return (
-    <div style={{ padding: "20px", fontFamily: "Arial", background: "#fff" }}>
+    .card {
+      background: #f3f3f3;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 15px;
+      width: 300px;
+    }
 
-      <h1 style={{ textAlign: "center" }}>Shivakrisna Photography</h1>
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+    }
 
-      {packages.map(pkg => (
-        <div key={pkg.id} style={{
-          background: "#f3f3f3",
-          padding: "20px",
-          marginBottom: "20px",
-          borderRadius: "15px"
-        }}>
+    .details-btn {
+      background: #c89b1d;
+      color: white;
+    }
 
-          <h2>{pkg.title}</h2>
-          <p>{pkg.price}</p>
-          <p>{pkg.sheets}</p>
+    .add-btn {
+      background: green;
+      color: white;
+    }
 
-          <button
-            onClick={() => setOpenId(openId === pkg.id ? null : pkg.id)}
-            style={{
-              background: "#d4a017",
-              color: "white",
-              padding: "8px 12px",
-              borderRadius: "8px",
-              marginRight: "10px",
-              border: "none"
-            }}
-          >
-            {openId === pkg.id ? "Hide Details" : "Details"}
-          </button>
+    .details {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
 
-          <button style={{
-            background: "green",
-            color: "white",
-            padding: "8px 12px",
-            borderRadius: "8px",
-            border: "none"
-          }}>
-            Add
-          </button>
+<body>
 
-          {/* DETAILS */}
-          {openId === pkg.id && (
-            <div style={{ marginTop: "10px" }}>
-              {pkg.details.map((d, i) => (
-                <p key={i}>{d}</p>
-              ))}
-            </div>
-          )}
+<h1>Shivakrisna Photography</h1>
 
-        </div>
-      ))}
+<div id="packages"></div>
 
+<script>
+
+const packages = [
+  {
+    title: "Package 1 (Basic)",
+    price: "₹49,000",
+    sheets: "50 Sheets",
+    details: [
+      "Bride: Traditional Photography & Videography",
+      "Groom: Traditional Photography & Videography",
+      "Wedding: Traditional Photography & Videography"
+    ]
+  },
+  {
+    title: "Package 2 (Basic To Advance)",
+    price: "₹74,999",
+    sheets: "50 Sheets",
+    details: [
+      "Wedding: Traditional + Candid + Cinematic"
+    ]
+  },
+  {
+    title: "Package 3 (Premium)",
+    price: "₹89,999",
+    sheets: "80 Sheets",
+    details: [
+      "Wedding: Drone + LED + Cinematic"
+    ]
+  }
+];
+
+const container = document.getElementById("packages");
+
+packages.forEach((pkg, index) => {
+
+  container.innerHTML += `
+    <div class="card">
+      <h3>${pkg.title}</h3>
+      <p>${pkg.price}</p>
+      <p>${pkg.sheets}</p>
+
+      <button class="details-btn" onclick="toggle(${index})">
+        Details
+      </button>
+
+      <button class="add-btn">
+        Add
+      </button>
+
+      <div id="d${index}" class="details">
+        ${pkg.details.map(d => `<p>${d}</p>`).join("")}
+      </div>
     </div>
-  );
+  `;
+});
+
+function toggle(i){
+  const el = document.getElementById("d"+i);
+  el.style.display = el.style.display === "block" ? "none" : "block";
 }
+
+</script>
+
+</body>
+</html>
