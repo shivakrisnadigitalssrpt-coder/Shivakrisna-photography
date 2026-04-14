@@ -6,46 +6,91 @@
   <style>
     body {
       font-family: Arial;
-      background: #fafafa;
+      background: #f3f4f6;
       padding: 20px;
     }
 
-    h1, h2 {
+    h1 {
       text-align: center;
+      margin-bottom: 30px;
     }
 
-    .section-title {
-      margin-top: 40px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
 
     .card {
       background: #fff;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .price {
+      color: green;
+      font-size: 22px;
+      font-weight: bold;
     }
 
     button {
-      padding: 6px 10px;
+      padding: 8px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
-    .add-btn { background: green; color: white; }
-    .remove-btn { background: red; color: white; }
+    .details-btn {
+      background: orange;
+      color: white;
+      width: 100%;
+    }
 
-    .details { display:none; margin-top:10px; }
+    .add-btn {
+      background: blue;
+      color: white;
+      width: 100%;
+    }
 
-    #cart {
-      background:#fff;
-      padding:15px;
-      border-radius:10px;
+    .details {
+      display: none;
+      background: #eee;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    #cartBox {
+      margin-top: 40px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .remove {
+      color: red;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .whatsapp {
+      display: block;
+      margin-top: 20px;
+      background: green;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -53,80 +98,49 @@
 <body>
 
 <h1>📸 Shivakrisna Photography</h1>
-<h2>Wedding Packages Starting at ₹50,000/-</h2>
 
-<div id="packages"></div>
+<div class="grid" id="packages"></div>
 
-<h2>🛒 Cart</h2>
-<div id="cart"></div>
-<h3 id="total"></h3>
-
-<h2>⚙️ Customize Your Package</h2>
-
-<div class="card">
-  Sheets: <input type="number" id="sheets" value="0"><br><br>
-
-  Traditional Video (₹7000/day): <input type="number" id="tv"><br>
-  Drone (₹8000/day): <input type="number" id="drone"><br>
-  LED Screen (₹12000/day): <input type="number" id="led"><br>
-  Pre Wedding (₹30000/day): <input type="number" id="pre"><br>
-  Cinematic Video (₹15000/day): <input type="number" id="cine"><br>
-  Candid Photo (₹10000/day): <input type="number" id="candid"><br>
-  Baby Shoot (₹25000/day): <input type="number" id="baby"><br>
-
-  <br>
-  <button onclick="addCustom()">Add Custom Package</button>
+<div id="cartBox" style="display:none;">
+  <h2>🛒 Your Selection</h2>
+  <div id="cart"></div>
+  <h3 id="total"></h3>
+  <a id="whatsappLink" class="whatsapp" target="_blank">Checkout via WhatsApp</a>
 </div>
 
 <script>
 
+let selectedId = null;
 let cart = [];
 
 const packages = [
-
-{title:"Wedding Package 1", price:49000, details:["Bride, Groom, Wedding Coverage"]},
-{title:"Wedding Package 2", price:74999, details:["Traditional + Candid + Cinematic"]},
-{title:"Wedding Package 3", price:143999, details:["Drone + LED + Premium"]},
-{title:"Wedding Package 4", price:114999, details:["Pre Wedding + Drone"]},
-{title:"Wedding Package 5", price:129999, details:["Reception Included"]},
-{title:"Wedding Package 6", price:167999, details:["Advanced Full"]},
-{title:"Wedding Package 7", price:192999, details:["Advanced Pro"]},
-{title:"Wedding Package 8", price:241999, details:["Premium"]},
-{title:"Wedding Package 9", price:261999, details:["Premium + Live"]},
-{title:"Wedding Package 10", price:279999, details:["Engagement Included"]},
-
-{title:"Birthday Package 11", price:21000, details:["Basic"]},
-{title:"Birthday Package 12", price:29999, details:["Baby Shoot"]},
-{title:"Birthday Package 13", price:44999, details:["Drone"]},
-{title:"Birthday Package 14", price:69999, details:["Premium"]},
-
-{title:"Half Saree Package 15", price:21000, details:["Basic"]},
-{title:"Half Saree Package 16", price:29999, details:["Haldi"]},
-{title:"Half Saree Package 17", price:44999, details:["Drone"]},
-{title:"Half Saree Package 18", price:71999, details:["Advance"]},
-{title:"Half Saree Package 19", price:96999, details:["Advance Plus"]},
-{title:"Half Saree Package 20", price:121999, details:["Premium"]},
-
-{title:"Cradle Package 21", price:21000, details:["Basic"]},
-{title:"Cradle Package 22", price:39999, details:["Candid + Cinematic"]}
-
+  { id:1, title:"Package 1 (Basic)", price:49000, sheets:50, details:["Bride: Traditional", "Groom: Traditional", "Wedding: Traditional"] },
+  { id:2, title:"Package 2 (Advance)", price:74999, sheets:50, details:["Wedding: Trad + Candid + Cinematic"] },
+  { id:3, title:"Package 3 (Premium)", price:89999, sheets:80, details:["Drone + LED"] },
+  { id:11, title:"Birthday Basic", price:21000, sheets:30, details:["Traditional"] },
+  { id:15, title:"Saree Basic", price:21000, sheets:30, details:["Traditional"] },
+  { id:21, title:"Cradle Basic", price:21000, sheets:30, details:["Traditional"] }
 ];
 
 function renderPackages(){
-  const container = document.getElementById("packages");
-  container.innerHTML = "";
+  const box = document.getElementById("packages");
+  box.innerHTML = "";
 
-  packages.forEach((pkg,i)=>{
-    container.innerHTML += `
+  packages.forEach((p,i)=>{
+    box.innerHTML += `
       <div class="card">
-        <h3>${pkg.title}</h3>
-        <p>₹${pkg.price}</p>
+        <h3>${p.title}</h3>
+        <p class="price">₹${p.price}</p>
+        <p>${p.sheets} Sheets</p>
 
-        <button onclick="toggle(${i})">Details</button>
-        <button class="add-btn" onclick="add(${i})">Add</button>
+        <button class="details-btn" onclick="toggle(${i})">
+          ${selectedId===i ? "Hide Details":"View Details"}
+        </button>
+
+        <button class="add-btn" onclick="add(${i})">Add to Cart</button>
 
         <div id="d-${i}" class="details">
-          ${pkg.details.map(d=>`<p>${d}</p>`).join("")}
+          ${p.details.map(d=>`<p>• ${d}</p>`).join("")}
         </div>
       </div>
     `;
@@ -134,50 +148,52 @@ function renderPackages(){
 }
 
 function toggle(i){
-  let d = document.getElementById("d-"+i);
-  d.style.display = d.style.display==="block"?"none":"block";
+  selectedId = selectedId===i ? null : i;
+  renderPackages();
+
+  if(selectedId!==null){
+    document.getElementById("d-"+i).style.display="block";
+  }
 }
 
 function add(i){
-  cart.push(packages[i]);
+  const item = {...packages[i], uid: Date.now()+Math.random()};
+  cart.push(item);
   renderCart();
 }
 
-function addCustom(){
-  let total = 0;
-
-  total += document.getElementById("sheets").value * 500;
-  total += document.getElementById("tv").value * 7000;
-  total += document.getElementById("drone").value * 8000;
-  total += document.getElementById("led").value * 12000;
-  total += document.getElementById("pre").value * 30000;
-  total += document.getElementById("cine").value * 15000;
-  total += document.getElementById("candid").value * 10000;
-  total += document.getElementById("baby").value * 25000;
-
-  cart.push({title:"Custom Package", price: total});
+function removeItem(uid){
+  cart = cart.filter(x=>x.uid!==uid);
   renderCart();
 }
 
 function renderCart(){
-  let c = document.getElementById("cart");
-  c.innerHTML = "";
+  const box = document.getElementById("cart");
+  const cartBox = document.getElementById("cartBox");
+  box.innerHTML = "";
+
   let total = 0;
 
-  cart.forEach((item,i)=>{
-    c.innerHTML += `
-      <p>${item.title} - ₹${item.price}
-      <button class="remove-btn" onclick="removeItem(${i})">X</button></p>
+  cart.forEach(item=>{
+    box.innerHTML += `
+      <div class="cart-item">
+        <span>${item.title}</span>
+        <span>₹${item.price} <span class="remove" onclick="removeItem('${item.uid}')">✕</span></span>
+      </div>
     `;
     total += item.price;
   });
 
-  document.getElementById("total").innerText = "Total: ₹"+total;
-}
+  if(cart.length>0){
+    cartBox.style.display="block";
+  }
 
-function removeItem(i){
-  cart.splice(i,1);
-  renderCart();
+  document.getElementById("total").innerText = "Total: ₹"+total;
+
+  const names = cart.map(i=>i.title).join(", ");
+  const msg = `Hi Shiva, I want to book: ${names}. Total: ₹${total}`;
+  document.getElementById("whatsappLink").href =
+    "https://wa.me/919553272893?text="+encodeURIComponent(msg);
 }
 
 renderPackages();
