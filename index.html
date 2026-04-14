@@ -1,269 +1,120 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+
+const packages = [
+  // Wedding (1-10)
+  { id: 1, category: "Wedding", title: "Basic", price: 49000, sheets: 50, details: ["Bride/Groom: Traditional Photo & Video", "Wedding: Traditional Coverage"] },
+  { id: 2, category: "Wedding", title: "Basic To Advance", price: 74999, sheets: 50, details: ["Wedding: Traditional + Candid + Cinematic"] },
+  { id: 3, category: "Wedding", title: "Basic To Advance Plus", price: 89999, sheets: 80, details: ["Wedding: Trad + Candid + Cinematic + Drone + LED"] },
+  { id: 4, category: "Wedding", title: "Advance Pro", price: 114999, sheets: 80, details: ["Pre Wedding: Candid + Cinematic + Drone", "Wedding: All Coverage + LED + Drone"] },
+  { id: 7, category: "Wedding", title: "Advanced Pro", price: 192999, sheets: 100, details: ["All Coverage + Cinematic + Drone + LED + Candid"] },
+  { id: 10, category: "Wedding", title: "Premium Pro", price: 279999, sheets: 100, details: ["Engagement + Pre Wedding + Wedding + Reception Full Coverage"] },
+
+  // Birthday (11-14)
+  { id: 11, category: "Birthday", title: "Basic", price: 21000, sheets: 30, details: ["Traditional Photo & Video"] },
+  { id: 14, category: "Birthday", title: "Premium", price: 69999, sheets: 30, details: ["Full Premium + Cinematic"] },
+
+  // Saree Ceremony (15-20)
+  { id: 15, category: "Saree", title: "Basic", price: 21000, sheets: 30, details: ["Traditional Coverage"] },
+  { id: 20, category: "Saree", title: "Full Premium", price: 121999, sheets: 50, details: ["Full Coverage"] },
+
+  // Cradle (21-22)
+  { id: 21, category: "Cradle", title: "Basic", price: 21000, sheets: 30, details: ["Traditional Coverage"] },
+  { id: 22, category: "Cradle", title: "Premium", price: 39999, sheets: 30, details: ["Candid + Cinematic"] },
+];
 
 export default function ShivakrishnaPhotography() {
-
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [cart, setCart] = useState([]);
 
-  // ✅ ALL PACKAGES
-  const packages = [
-    {
-      id: 1,
-      title: "Package 1 (Basic)",
-      price: 49000,
-      sheets: 50,
-      details: [
-        "Bride: Traditional Photography & Videography",
-        "Groom: Traditional Photography & Videography",
-        "Wedding: Traditional Photography & Videography"
-      ]
-    },
-    {
-      id: 2,
-      title: "Package 2 (Basic To Advance)",
-      price: 74999,
-      sheets: 50,
-      details: [
-        "Bride: Traditional Photography & Videography",
-        "Groom: Traditional Photography & Videography",
-        "Wedding: Traditional + Candid + Cinematic"
-      ]
-    },
-    {
-      id: 3,
-      title: "Package 3 (Basic To Advance Plus)",
-      price: 89999,
-      sheets: 80,
-      details: [
-        "Bride: Traditional Photography & Videography",
-        "Groom: Traditional Photography & Videography",
-        "Wedding: Traditional + Candid + Cinematic + Drone + LED"
-      ]
-    },
-    {
-      id: 4,
-      title: "Package 4 (Advance Pro)",
-      price: 114999,
-      sheets: 80,
-      details: [
-        "Pre Wedding: Candid + Cinematic + Drone",
-        "Wedding: All Coverage + LED + Drone"
-      ]
-    },
-    {
-      id: 5,
-      title: "Package 5 (Pro Max)",
-      price: 129999,
-      sheets: 80,
-      details: [
-        "Pre Wedding + Wedding + Reception Full Coverage"
-      ]
-    },
-    {
-      id: 6,
-      title: "Package 6 (Advanced)",
-      price: 167999,
-      sheets: 100,
-      details: [
-        "Pre Wedding + Wedding + Reception + Drone + LED"
-      ]
-    },
-    {
-      id: 7,
-      title: "Package 7 (Advanced Pro)",
-      price: 192999,
-      sheets: 100,
-      details: [
-        "All Coverage + Cinematic + Drone + LED + Candid"
-      ]
-    },
-    {
-      id: 8,
-      title: "Package 8 (Premium)",
-      price: 241999,
-      sheets: 100,
-      details: [
-        "Pre Wedding + Wedding + Reception + Full Premium Coverage"
-      ]
-    },
-    {
-      id: 9,
-      title: "Package 9 (Premium Plus)",
-      price: 261999,
-      sheets: 100,
-      details: [
-        "All Premium + Live Streaming"
-      ]
-    },
-    {
-      id: 10,
-      title: "Package 10 (Premium Pro)",
-      price: 279999,
-      sheets: 100,
-      details: [
-        "Engagement + Pre Wedding + Wedding + Reception Full Coverage"
-      ]
-    },
+  const addToCart = (pkg) => setCart([...cart, { ...pkg, cartId: Date.now() }]);
+  const removeFromCart = (cartId) => setCart(cart.filter(item => item.cartId !== cartId));
 
-    // 🎉 Birthday
-    {
-      id: 11,
-      title: "Birthday Basic",
-      price: 21000,
-      sheets: 30,
-      details: ["Traditional Photo & Video"]
-    },
-    {
-      id: 12,
-      title: "Birthday Advance",
-      price: 29999,
-      sheets: 30,
-      details: ["Photo + Video + Baby Shoot"]
-    },
-    {
-      id: 13,
-      title: "Birthday Advance Plus",
-      price: 44999,
-      sheets: 30,
-      details: ["Photo + Video + Drone + LED"]
-    },
-    {
-      id: 14,
-      title: "Birthday Premium",
-      price: 69999,
-      sheets: 30,
-      details: ["Full Premium + Cinematic"]
-    },
+  const total = useMemo(() => cart.reduce((sum, item) => sum + item.price, 0), [cart]);
 
-    // 👗 Saree
-    {
-      id: 15,
-      title: "Saree Basic",
-      price: 21000,
-      sheets: 30,
-      details: ["Traditional Coverage"]
-    },
-    {
-      id: 16,
-      title: "Saree Basic 2",
-      price: 29999,
-      sheets: 30,
-      details: ["Haldi + Function"]
-    },
-    {
-      id: 17,
-      title: "Saree Advance",
-      price: 44999,
-      sheets: 30,
-      details: ["Drone + LED"]
-    },
-    {
-      id: 18,
-      title: "Saree Advance Plus",
-      price: 71999,
-      sheets: 50,
-      details: ["Drone + LED + Premium"]
-    },
-    {
-      id: 19,
-      title: "Saree Premium",
-      price: 96999,
-      sheets: 50,
-      details: ["Candid + Cinematic"]
-    },
-    {
-      id: 20,
-      title: "Saree Full Premium",
-      price: 121999,
-      sheets: 50,
-      details: ["Full Coverage"]
-    },
-
-    // 👶 Cradle
-    {
-      id: 21,
-      title: "Cradle Basic",
-      price: 21000,
-      sheets: 30,
-      details: ["Traditional Coverage"]
-    },
-    {
-      id: 22,
-      title: "Cradle Premium",
-      price: 39999,
-      sheets: 30,
-      details: ["Candid + Cinematic"]
-    },
-  ];
-
-  const addToCart = (pkg) => {
-    setCart([...cart, pkg]);
-  };
-
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const categories = ["Wedding", "Birthday", "Saree", "Cradle"];
 
   return (
-    <div className="p-6 bg-white">
+    <div className="max-w-6xl mx-auto p-4 md:p-8 bg-gray-50 min-h-screen">
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+          Shivakrishna Photography
+        </h1>
+        <p className="text-gray-500 mt-2">Capturing your timeless moments</p>
+      </header>
 
-      <h1 className="text-3xl font-bold text-center mb-10">
-        Shivakrisna Photography
-      </h1>
+      {/* RENDER BY CATEGORY */}
+      {categories.map((cat) => (
+        <section key={cat} className="mb-12">
+          <h2 className="text-2xl font-bold border-b-2 border-yellow-500 inline-block mb-6">{cat} Packages</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {packages.filter(p => p.category === cat).map((pkg) => (
+              <div key={pkg.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="text-xl font-bold text-gray-800">{pkg.title}</h3>
+                <div className="flex justify-between items-baseline my-4">
+                  <span className="text-2xl font-bold text-green-600">₹{pkg.price.toLocaleString()}</span>
+                  <span className="text-sm text-gray-500">{pkg.sheets} Sheets</span>
+                </div>
 
-      {/* PACKAGES */}
-      {packages.map((pkg) => (
-        <div key={pkg.id} className="bg-gray-100 p-6 rounded-2xl mb-6 shadow">
+                <div className="space-y-3">
+                  <button
+                    onClick={() => setSelectedPackage(selectedPackage === pkg.id ? null : pkg.id)}
+                    className="w-full text-sm font-medium text-blue-600 hover:underline text-left"
+                  >
+                    {selectedPackage === pkg.id ? "Hide Details" : "View Details"}
+                  </button>
 
-          <h2 className="text-xl font-bold">{pkg.title}</h2>
-          <p className="mt-2">₹{pkg.price}</p>
-          <p>{pkg.sheets} Sheets</p>
+                  {selectedPackage === pkg.id && (
+                    <ul className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg animate-in fade-in duration-300">
+                      {pkg.details.map((d, i) => <li key={i} className="mb-1">• {d}</li>)}
+                    </ul>
+                  )}
 
-          <div className="flex gap-3 mt-3">
-            <button
-              onClick={() => setSelectedPackage(pkg)}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-lg"
-            >
-              Details
-            </button>
-
-            <button
-              onClick={() => addToCart(pkg)}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg"
-            >
-              Add
-            </button>
+                  <button
+                    onClick={() => addToCart(pkg)}
+                    className="w-full bg-gray-900 text-white font-semibold py-2 rounded-xl hover:bg-gray-800 transition-colors"
+                  >
+                    Add to Booking
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-
-          {/* DETAILS */}
-          {selectedPackage?.id === pkg.id && (
-            <div className="mt-4">
-              {pkg.details.map((d, i) => (
-                <p key={i}>{d}</p>
-              ))}
-            </div>
-          )}
-
-        </div>
+        </section>
       ))}
 
-      {/* CART */}
-      <div className="mt-10 p-6 bg-gray-200 rounded-xl">
-        <h2 className="text-xl font-bold">Cart</h2>
-
-        {cart.map((item, i) => (
-          <p key={i}>{item.title} - ₹{item.price}</p>
-        ))}
-
-        <h3 className="mt-4 font-bold">Total: ₹{total}</h3>
-
-        <a
-          href={`https://wa.me/919553272893?text=Total Package ₹${total}`}
-          target="_blank"
-          className="block mt-4 bg-green-600 text-white text-center py-2 rounded-lg"
-        >
-          Checkout WhatsApp
-        </a>
-      </div>
-
+      {/* STICKY CART / SUMMARY */}
+      {cart.length > 0 && (
+        <div className="fixed bottom-6 right-6 left-6 md:left-auto md:w-96 bg-white shadow-2xl rounded-2xl p-6 border border-gray-100 z-50">
+          <h2 className="text-lg font-bold mb-4 flex justify-between">
+            Your Selection <span>({cart.length})</span>
+          </h2>
+          <div className="max-h-40 overflow-y-auto mb-4 space-y-2">
+            {cart.map((item) => (
+              <div key={item.cartId} className="flex justify-between items-center text-sm bg-gray-50 p-2 rounded">
+                <span>{item.category} - {item.title}</span>
+                <div className="flex items-center gap-3">
+                  <span>₹{item.price.toLocaleString()}</span>
+                  <button onClick={() => removeFromCart(item.cartId)} className="text-red-500 font-bold">×</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="border-t pt-4">
+            <div className="flex justify-between text-xl font-bold mb-4">
+              <span>Total:</span>
+              <span>₹{total.toLocaleString()}</span>
+            </div>
+            <a
+              href={`https://wa.me/919553272893?text=Hi, I want to book: ${cart.map(i => i.category + ' ' + i.title).join(', ')}. Total: ₹${total}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full bg-green-500 text-white text-center py-3 rounded-xl font-bold shadow-lg shadow-green-200 hover:bg-green-600 transition-all"
+            >
+              Confirm via WhatsApp
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
