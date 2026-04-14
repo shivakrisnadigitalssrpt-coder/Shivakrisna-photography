@@ -1,204 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Shivakrisna Photography</title>
+import React, { useState } from "react";
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #f3f4f6;
-      padding: 20px;
+export default function App() {
+
+  const [openId, setOpenId] = useState(null);
+
+  const packages = [
+    {
+      id: 1,
+      title: "Package 1 (Basic)",
+      price: "₹49,000",
+      sheets: "50 Sheets",
+      details: [
+        "Bride: Traditional Photography & Videography",
+        "Groom: Traditional Photography & Videography",
+        "Wedding: Traditional Photography & Videography"
+      ]
+    },
+    {
+      id: 2,
+      title: "Package 2 (Basic To Advance)",
+      price: "₹74,999",
+      sheets: "50 Sheets",
+      details: [
+        "Bride: Traditional Photography & Videography",
+        "Groom: Traditional Photography & Videography",
+        "Wedding: Traditional + Candid + Cinematic"
+      ]
+    },
+    {
+      id: 3,
+      title: "Package 3 (Premium)",
+      price: "₹89,999",
+      sheets: "80 Sheets",
+      details: [
+        "Wedding: Candid + Cinematic + Drone + LED"
+      ]
     }
+  ];
 
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial", background: "#fff" }}>
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
+      <h1 style={{ textAlign: "center" }}>Shivakrisna Photography</h1>
 
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
+      {packages.map(pkg => (
+        <div key={pkg.id} style={{
+          background: "#f3f3f3",
+          padding: "20px",
+          marginBottom: "20px",
+          borderRadius: "15px"
+        }}>
 
-    .price {
-      color: green;
-      font-size: 22px;
-      font-weight: bold;
-    }
+          <h2>{pkg.title}</h2>
+          <p>{pkg.price}</p>
+          <p>{pkg.sheets}</p>
 
-    button {
-      padding: 8px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+          <button
+            onClick={() => setOpenId(openId === pkg.id ? null : pkg.id)}
+            style={{
+              background: "#d4a017",
+              color: "white",
+              padding: "8px 12px",
+              borderRadius: "8px",
+              marginRight: "10px",
+              border: "none"
+            }}
+          >
+            {openId === pkg.id ? "Hide Details" : "Details"}
+          </button>
 
-    .details-btn {
-      background: orange;
-      color: white;
-      width: 100%;
-    }
+          <button style={{
+            background: "green",
+            color: "white",
+            padding: "8px 12px",
+            borderRadius: "8px",
+            border: "none"
+          }}>
+            Add
+          </button>
 
-    .add-btn {
-      background: blue;
-      color: white;
-      width: 100%;
-    }
+          {/* DETAILS */}
+          {openId === pkg.id && (
+            <div style={{ marginTop: "10px" }}>
+              {pkg.details.map((d, i) => (
+                <p key={i}>{d}</p>
+              ))}
+            </div>
+          )}
 
-    .details {
-      display: none;
-      background: #eee;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-
-    #cartBox {
-      margin-top: 40px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .remove {
-      color: red;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .whatsapp {
-      display: block;
-      margin-top: 20px;
-      background: green;
-      color: white;
-      padding: 12px;
-      text-align: center;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
-</head>
-
-<body>
-
-<h1>📸 Shivakrisna Photography</h1>
-
-<div class="grid" id="packages"></div>
-
-<div id="cartBox" style="display:none;">
-  <h2>🛒 Your Selection</h2>
-  <div id="cart"></div>
-  <h3 id="total"></h3>
-  <a id="whatsappLink" class="whatsapp" target="_blank">Checkout via WhatsApp</a>
-</div>
-
-<script>
-
-let selectedId = null;
-let cart = [];
-
-const packages = [
-  { id:1, title:"Package 1 (Basic)", price:49000, sheets:50, details:["Bride: Traditional", "Groom: Traditional", "Wedding: Traditional"] },
-  { id:2, title:"Package 2 (Advance)", price:74999, sheets:50, details:["Wedding: Trad + Candid + Cinematic"] },
-  { id:3, title:"Package 3 (Premium)", price:89999, sheets:80, details:["Drone + LED"] },
-  { id:11, title:"Birthday Basic", price:21000, sheets:30, details:["Traditional"] },
-  { id:15, title:"Saree Basic", price:21000, sheets:30, details:["Traditional"] },
-  { id:21, title:"Cradle Basic", price:21000, sheets:30, details:["Traditional"] }
-];
-
-function renderPackages(){
-  const box = document.getElementById("packages");
-  box.innerHTML = "";
-
-  packages.forEach((p,i)=>{
-    box.innerHTML += `
-      <div class="card">
-        <h3>${p.title}</h3>
-        <p class="price">₹${p.price}</p>
-        <p>${p.sheets} Sheets</p>
-
-        <button class="details-btn" onclick="toggle(${i})">
-          ${selectedId===i ? "Hide Details":"View Details"}
-        </button>
-
-        <button class="add-btn" onclick="add(${i})">Add to Cart</button>
-
-        <div id="d-${i}" class="details">
-          ${p.details.map(d=>`<p>• ${d}</p>`).join("")}
         </div>
-      </div>
-    `;
-  });
+      ))}
+
+    </div>
+  );
 }
-
-function toggle(i){
-  selectedId = selectedId===i ? null : i;
-  renderPackages();
-
-  if(selectedId!==null){
-    document.getElementById("d-"+i).style.display="block";
-  }
-}
-
-function add(i){
-  const item = {...packages[i], uid: Date.now()+Math.random()};
-  cart.push(item);
-  renderCart();
-}
-
-function removeItem(uid){
-  cart = cart.filter(x=>x.uid!==uid);
-  renderCart();
-}
-
-function renderCart(){
-  const box = document.getElementById("cart");
-  const cartBox = document.getElementById("cartBox");
-  box.innerHTML = "";
-
-  let total = 0;
-
-  cart.forEach(item=>{
-    box.innerHTML += `
-      <div class="cart-item">
-        <span>${item.title}</span>
-        <span>₹${item.price} <span class="remove" onclick="removeItem('${item.uid}')">✕</span></span>
-      </div>
-    `;
-    total += item.price;
-  });
-
-  if(cart.length>0){
-    cartBox.style.display="block";
-  }
-
-  document.getElementById("total").innerText = "Total: ₹"+total;
-
-  const names = cart.map(i=>i.title).join(", ");
-  const msg = `Hi Shiva, I want to book: ${names}. Total: ₹${total}`;
-  document.getElementById("whatsappLink").href =
-    "https://wa.me/919553272893?text="+encodeURIComponent(msg);
-}
-
-renderPackages();
-
-</script>
-
-</body>
-</html>
