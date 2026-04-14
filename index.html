@@ -6,7 +6,6 @@
 <style>
 body { font-family: Arial; margin:0; background:#111; color:white; text-align:center; }
 .section { padding:30px; }
-
 .card {
   background:#222;
   margin:10px;
@@ -16,16 +15,8 @@ body { font-family: Arial; margin:0; background:#111; color:white; text-align:ce
   width:260px;
   text-align:left;
 }
-
-button {
-  background:gold;
-  border:none;
-  padding:8px;
-  cursor:pointer;
-  margin-top:5px;
-}
-
-input { width:60px; }
+button { background:gold; border:none; padding:8px; cursor:pointer; margin-top:5px;}
+.details { display:none; font-size:14px; color:#ccc; }
 </style>
 
 </head>
@@ -36,80 +27,57 @@ input { width:60px; }
 <h3>📞 9553272893</h3>
 
 <!-- WEDDING -->
-<div class="section">
-<h2>💍 Wedding Packages (Starting ₹50,000)</h2>
-<div id="wedding"></div>
-</div>
+<div class="section"><h2>💍 Wedding Packages</h2><div id="wedding"></div></div>
 
 <!-- CRADLE -->
-<div class="section">
-<h2>👶 Cradle Ceremony Packages</h2>
-<div id="cradle"></div>
-</div>
+<div class="section"><h2>👶 Cradle Packages</h2><div id="cradle"></div></div>
 
 <!-- BIRTHDAY -->
-<div class="section">
-<h2>🎉 Birthday Packages</h2>
-<div id="birthday"></div>
-</div>
+<div class="section"><h2>🎉 Birthday Packages</h2><div id="birthday"></div></div>
 
 <!-- SAREE -->
-<div class="section">
-<h2>👗 Saree / Dothi Ceremony Packages</h2>
-<div id="saree"></div>
-</div>
+<div class="section"><h2>👗 Saree/Dothi Packages</h2><div id="saree"></div></div>
 
 <!-- CUSTOM -->
-<div class="section">
-<h2>✨ Customize Your Package</h2>
-<div id="custom"></div>
-</div>
+<div class="section"><h2>✨ Customize</h2><div id="custom"></div></div>
 
 <!-- CART -->
-<div class="section">
-<h2>🛒 Your Package</h2>
-<div id="cart"></div>
-<h3 id="total">Total: ₹0</h3>
-</div>
-
-<div class="section">
-<a id="wa" target="_blank"><button>Send WhatsApp</button></a>
-</div>
+<div class="section"><h2>🛒 Cart</h2><div id="cart"></div><h3 id="total">₹0</h3></div>
 
 <script>
 
-// 🔥 WEDDING FULL
-const wedding = [
-{name:"Package 1 (Basic)",price:49000,detail:"50 Sheets Album"},
-{name:"Package 2 (Basic to Advance)",price:74999,detail:"50 Sheets Album"},
-{name:"Package 3 (Advance Plus)",price:143999,detail:"80 Sheets Album"},
-{name:"Package 4 (Pro)",price:114999,detail:"80 Sheets Album"},
-{name:"Package 5 (Pro Max)",price:129999,detail:"80 Sheets Album"},
-{name:"Package 6 (Advanced)",price:167999,detail:"100 Sheets Album"},
-{name:"Package 7 (Advanced Pro)",price:192999,detail:"100 Sheets Album"},
-{name:"Package 8 (Premium)",price:241999,detail:"100 Sheets Album"},
-{name:"Package 9 (Premium)",price:261999,detail:"100 Sheets Album"},
-{name:"Package 10 (Premium Pro)",price:279999,detail:"100 Sheets Album"}
+// 🔥 WEDDING FULL 1–10
+const wedding=[
+{name:"Package 1 Basic",price:49000,detail:"50 Sheets"},
+{name:"Package 2 Advance",price:74999,detail:"50 Sheets"},
+{name:"Package 3 Plus",price:143999,detail:"80 Sheets"},
+{name:"Package 4 Pro",price:114999,detail:"80 Sheets"},
+{name:"Package 5 Pro Max",price:129999,detail:"80 Sheets"},
+{name:"Package 6 Advanced",price:167999,detail:"100 Sheets"},
+{name:"Package 7 Advanced Pro",price:192999,detail:"100 Sheets"},
+{name:"Package 8 Premium",price:241999,detail:"100 Sheets"},
+{name:"Package 9 Premium+",price:261999,detail:"100 Sheets"},
+{name:"Package 10 Premium Pro",price:279999,detail:"100 Sheets"}
 ];
 
-// 🎉 BIRTHDAY
-const birthday = [
+// 🎉 BIRTHDAY 11–14
+const birthday=[
 {name:"Basic",price:21000,detail:"30 Sheets"},
 {name:"Basic to Advance",price:29999,detail:"30 Sheets"},
 {name:"Advance",price:44999,detail:"30 Sheets"},
 {name:"Premium",price:69999,detail:"30 Sheets"}
 ];
 
-// 👶 CRADLE
-const cradle = [
+// 👶 CRADLE 21–22
+const cradle=[
 {name:"Basic",price:21000,detail:"30 Sheets"},
 {name:"Premium",price:39999,detail:"30 Sheets"}
 ];
 
-// 👗 SAREE
-const saree = [
+// 👗 SAREE 15–20
+const saree=[
 {name:"Basic",price:21000,detail:"30 Sheets"},
-{name:"Basic",price:29999,detail:"30 Sheets"},
+{name:"Basic 2",price:29999,detail:"30 Sheets"},
 {name:"Advance",price:44999,detail:"30 Sheets"},
 {name:"Advance",price:71999,detail:"50 Sheets"},
 {name:"Advance Plus",price:96999,detail:"50 Sheets"},
@@ -117,16 +85,11 @@ const saree = [
 ];
 
 // CUSTOM
-const custom = [
-{name:"Album Sheets (per sheet)",price:500},
-{name:"Traditional Video (per day)",price:7000},
-{name:"Drone (per day)",price:8000},
-{name:"LED Screen (per day)",price:12000},
-{name:"Pre Wedding Shoot (per day)",price:30000},
-{name:"Cinematic Video (per day)",price:15000},
-{name:"Candid Photography (per day)",price:10000},
-{name:"Baby Shoot (per day)",price:25000},
-{name:"Half Saree/Dothi (per day)",price:28000}
+const custom=[
+{name:"Album Sheets",price:500},
+{name:"Video",price:7000},
+{name:"Drone",price:8000},
+{name:"LED",price:12000}
 ];
 
 let cart=[];
@@ -134,12 +97,15 @@ let cart=[];
 // RENDER
 function render(list,id){
 let html="";
-list.forEach(p=>{
-html+=`<div class="card">
+list.forEach((p,i)=>{
+html+=`
+<div class="card">
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
-<p>${p.detail||""}</p>
+<p>${p.detail}</p>
+<button onclick="toggle('${id}${i}')">Details</button>
 <button onclick="add('${p.name}',${p.price})">Add</button>
+<div id="${id}${i}" class="details">Full coverage details included</div>
 </div>`;
 });
 document.getElementById(id).innerHTML=html;
@@ -149,10 +115,11 @@ document.getElementById(id).innerHTML=html;
 function renderCustom(){
 let html="";
 custom.forEach((c,i)=>{
-html+=`<div class="card">
+html+=`
+<div class="card">
 <h3>${c.name}</h3>
 <p>₹${c.price}</p>
-<input id="q${i}" value="1"/>
+<input id="q${i}" value="1">
 <button onclick="addC(${i})">Add</button>
 </div>`;
 });
@@ -177,15 +144,12 @@ html+=`<p>${c.n} x ${c.q} = ₹${s}</p>`;
 });
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
-
-document.getElementById("wa").href=
-"https://wa.me/919553272893?text=Total ₹"+total;
 }
 
 // INIT
 render(wedding,"wedding");
-render(cradle,"cradle");
 render(birthday,"birthday");
+render(cradle,"cradle");
 render(saree,"saree");
 renderCustom();
 
