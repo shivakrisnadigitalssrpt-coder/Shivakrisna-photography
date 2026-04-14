@@ -5,15 +5,16 @@
 
 <style>
 body { font-family: Arial; margin:0; background:#111; color:white; text-align:center; }
-.section { padding:40px; }
+.section { padding:30px; }
 
 .card {
   background:#222;
   margin:10px;
-  padding:20px;
+  padding:15px;
   border-radius:10px;
   display:inline-block;
   width:260px;
+  text-align:left;
 }
 
 button {
@@ -21,12 +22,10 @@ button {
   border:none;
   padding:8px;
   cursor:pointer;
-}
-
-input {
-  width:60px;
   margin-top:5px;
 }
+
+input { width:60px; }
 </style>
 
 </head>
@@ -38,13 +37,31 @@ input {
 
 <!-- WEDDING -->
 <div class="section">
-<h2>💍 Wedding Packages</h2>
+<h2>💍 Wedding Packages (Starting ₹50,000)</h2>
 <div id="wedding"></div>
+</div>
+
+<!-- CRADLE -->
+<div class="section">
+<h2>👶 Cradle Ceremony Packages</h2>
+<div id="cradle"></div>
+</div>
+
+<!-- BIRTHDAY -->
+<div class="section">
+<h2>🎉 Birthday Packages</h2>
+<div id="birthday"></div>
+</div>
+
+<!-- SAREE -->
+<div class="section">
+<h2>👗 Saree / Dothi Ceremony Packages</h2>
+<div id="saree"></div>
 </div>
 
 <!-- CUSTOM -->
 <div class="section">
-<h2>✨ Customize (Sheets & Addons)</h2>
+<h2>✨ Customize Your Package</h2>
 <div id="custom"></div>
 </div>
 
@@ -55,103 +72,121 @@ input {
 <h3 id="total">Total: ₹0</h3>
 </div>
 
-<!-- WHATSAPP -->
 <div class="section">
-<a id="wa" target="_blank">
-<button>Send on WhatsApp</button>
-</a>
+<a id="wa" target="_blank"><button>Send WhatsApp</button></a>
 </div>
 
 <script>
 
-// 🔥 YOUR REAL WEDDING PACKAGES
+// 🔥 WEDDING FULL
 const wedding = [
- {name:"Basic Package", price:49000},
- {name:"Basic to Advance", price:74999},
- {name:"Advance Plus", price:143999},
- {name:"Pro Package", price:114999},
- {name:"Pro Max", price:129999},
- {name:"Advanced", price:167999},
- {name:"Advanced Pro", price:192999},
- {name:"Premium", price:241999},
- {name:"Premium Plus", price:261999},
- {name:"Premium Pro", price:279999}
+{name:"Package 1 (Basic)",price:49000,detail:"50 Sheets Album"},
+{name:"Package 2 (Basic to Advance)",price:74999,detail:"50 Sheets Album"},
+{name:"Package 3 (Advance Plus)",price:143999,detail:"80 Sheets Album"},
+{name:"Package 4 (Pro)",price:114999,detail:"80 Sheets Album"},
+{name:"Package 5 (Pro Max)",price:129999,detail:"80 Sheets Album"},
+{name:"Package 6 (Advanced)",price:167999,detail:"100 Sheets Album"},
+{name:"Package 7 (Advanced Pro)",price:192999,detail:"100 Sheets Album"},
+{name:"Package 8 (Premium)",price:241999,detail:"100 Sheets Album"},
+{name:"Package 9 (Premium)",price:261999,detail:"100 Sheets Album"},
+{name:"Package 10 (Premium Pro)",price:279999,detail:"100 Sheets Album"}
 ];
 
-// 🔥 CUSTOM ITEMS
+// 🎉 BIRTHDAY
+const birthday = [
+{name:"Basic",price:21000,detail:"30 Sheets"},
+{name:"Basic to Advance",price:29999,detail:"30 Sheets"},
+{name:"Advance",price:44999,detail:"30 Sheets"},
+{name:"Premium",price:69999,detail:"30 Sheets"}
+];
+
+// 👶 CRADLE
+const cradle = [
+{name:"Basic",price:21000,detail:"30 Sheets"},
+{name:"Premium",price:39999,detail:"30 Sheets"}
+];
+
+// 👗 SAREE
+const saree = [
+{name:"Basic",price:21000,detail:"30 Sheets"},
+{name:"Basic",price:29999,detail:"30 Sheets"},
+{name:"Advance",price:44999,detail:"30 Sheets"},
+{name:"Advance",price:71999,detail:"50 Sheets"},
+{name:"Advance Plus",price:96999,detail:"50 Sheets"},
+{name:"Premium",price:121999,detail:"50 Sheets"}
+];
+
+// CUSTOM
 const custom = [
- {name:"Album Sheets", price:500},
- {name:"Traditional Video", price:7000},
- {name:"Drone", price:8000},
- {name:"LED Screen", price:12000},
- {name:"Cinematic Video", price:15000},
- {name:"Candid Photography", price:10000}
+{name:"Album Sheets (per sheet)",price:500},
+{name:"Traditional Video (per day)",price:7000},
+{name:"Drone (per day)",price:8000},
+{name:"LED Screen (per day)",price:12000},
+{name:"Pre Wedding Shoot (per day)",price:30000},
+{name:"Cinematic Video (per day)",price:15000},
+{name:"Candid Photography (per day)",price:10000},
+{name:"Baby Shoot (per day)",price:25000},
+{name:"Half Saree/Dothi (per day)",price:28000}
 ];
 
-let cart = [];
+let cart=[];
 
-// SHOW PACKAGES
-function renderWedding(){
- let html="";
- wedding.forEach(p=>{
-  html+=`
-   <div class="card">
-    <h3>${p.name}</h3>
-    <p>₹${p.price}</p>
-    <button onclick="add('${p.name}',${p.price})">Add</button>
-   </div>`;
- });
- document.getElementById("wedding").innerHTML=html;
+// RENDER
+function render(list,id){
+let html="";
+list.forEach(p=>{
+html+=`<div class="card">
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+<p>${p.detail||""}</p>
+<button onclick="add('${p.name}',${p.price})">Add</button>
+</div>`;
+});
+document.getElementById(id).innerHTML=html;
 }
 
-// SHOW CUSTOM
+// CUSTOM
 function renderCustom(){
- let html="";
- custom.forEach((c,i)=>{
-  html+=`
-   <div class="card">
-    <h3>${c.name}</h3>
-    <p>₹${c.price}</p>
-    <input type="number" id="q${i}" value="1"/>
-    <button onclick="addCustom(${i})">Add</button>
-   </div>`;
- });
- document.getElementById("custom").innerHTML=html;
+let html="";
+custom.forEach((c,i)=>{
+html+=`<div class="card">
+<h3>${c.name}</h3>
+<p>₹${c.price}</p>
+<input id="q${i}" value="1"/>
+<button onclick="addC(${i})">Add</button>
+</div>`;
+});
+document.getElementById("custom").innerHTML=html;
 }
 
-// ADD PACKAGE
-function add(name,price){
- cart.push({name,price,qty:1});
- update();
+// ADD
+function add(n,p){cart.push({n,p,q:1});update();}
+function addC(i){
+let q=document.getElementById("q"+i).value;
+cart.push({n:custom[i].name,p:custom[i].price,q:q});
+update();
 }
 
-// ADD CUSTOM
-function addCustom(i){
- let qty=document.getElementById("q"+i).value;
- cart.push({name:custom[i].name,price:custom[i].price,qty:qty});
- update();
-}
-
-// UPDATE CART
+// UPDATE
 function update(){
- let html="";
- let total=0;
+let html="";let total=0;
+cart.forEach(c=>{
+let s=c.p*c.q;
+total+=s;
+html+=`<p>${c.n} x ${c.q} = ₹${s}</p>`;
+});
+document.getElementById("cart").innerHTML=html;
+document.getElementById("total").innerText="Total ₹"+total;
 
- cart.forEach(c=>{
-  let sub=c.price*c.qty;
-  total+=sub;
-  html+=`<p>${c.name} x ${c.qty} = ₹${sub}</p>`;
- });
-
- document.getElementById("cart").innerHTML=html;
- document.getElementById("total").innerText="Total: ₹"+total;
-
- document.getElementById("wa").href =
-  "https://wa.me/919553272893?text=Total Package ₹"+total;
+document.getElementById("wa").href=
+"https://wa.me/919553272893?text=Total ₹"+total;
 }
 
 // INIT
-renderWedding();
+render(wedding,"wedding");
+render(cradle,"cradle");
+render(birthday,"birthday");
+render(saree,"saree");
 renderCustom();
 
 </script>
