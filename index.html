@@ -24,6 +24,7 @@ img {
   height:200px;
   object-fit:cover;
   border-radius:10px;
+  cursor:pointer;
   transition:0.3s;
 }
 img:hover { transform:scale(1.05); }
@@ -58,6 +59,31 @@ box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
 
 input { width:90%; padding:8px; margin:5px; }
+
+/* ZOOM POPUP */
+#popup {
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+}
+
+#popup img {
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+animation:zoom 0.3s ease;
+}
+
+@keyframes zoom {
+from {transform:scale(0.8);}
+to {transform:scale(1);}
+}
 </style>
 
 </head>
@@ -67,16 +93,16 @@ input { width:90%; padding:8px; margin:5px; }
 <h1>📸 Shivakrisna Photography</h1>
 <p>📞 Cell :- 9553272893</p>
 
-<!-- 🔥 GALLERY -->
+<!-- 📸 GALLERY -->
 <h2>📸 Our Work</h2>
 <div class="grid">
 
-<img src="https://lh3.googleusercontent.com/d/1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM">
-<img src="https://lh3.googleusercontent.com/d/1OQo_N9T6Jbm8Q3ZtnGvESflZWj50Ank2">
-<img src="https://lh3.googleusercontent.com/d/1tu8tQFpztOqne87OjNJwQKqn_LUwuIT0">
-<img src="https://lh3.googleusercontent.com/d/1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe">
-<img src="https://lh3.googleusercontent.com/d/1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ">
-<img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT">
+<img src="https://lh3.googleusercontent.com/d/1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM" onclick="openPopup(this.src)">
+<img src="https://lh3.googleusercontent.com/d/1OQo_N9T6Jbm8Q3ZtnGvESflZWj50Ank2" onclick="openPopup(this.src)">
+<img src="https://lh3.googleusercontent.com/d/1tu8tQFpztOqne87OjNJwQKqn_LUwuIT0" onclick="openPopup(this.src)">
+<img src="https://lh3.googleusercontent.com/d/1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe" onclick="openPopup(this.src)">
+<img src="https://lh3.googleusercontent.com/d/1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ" onclick="openPopup(this.src)">
+<img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT" onclick="openPopup(this.src)">
 
 </div>
 
@@ -116,6 +142,12 @@ input { width:90%; padding:8px; margin:5px; }
 <input id="location" placeholder="Location"><br>
 <button onclick="sendWhatsApp()">Submit</button>
 <button onclick="closeForm()">Close</button>
+</div>
+
+<!-- 🔥 ZOOM POPUP -->
+<div id="popup">
+<span onclick="closePopup()" style="position:absolute; top:20px; right:30px; font-size:30px; color:white; cursor:pointer;">✖</span>
+<img id="popupImg">
 </div>
 
 <script>
@@ -255,6 +287,15 @@ msg+=c.name+" ₹"+c.price+"%0A";
 });
 
 window.open("https://wa.me/919553272893?text="+msg);
+}
+
+// ZOOM
+function openPopup(src){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popupImg").src=src;
+}
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
 
 // INIT
