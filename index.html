@@ -4,10 +4,11 @@
 <title>Shivakrisna Photography</title>
 
 <style>
-body { font-family: Arial; margin:0; background:#111; color:white; text-align:center; }
+body { font-family: Arial; margin:0; background:white; color:black; text-align:center; }
 .section { padding:30px; }
+
 .card {
-  background:#222;
+  background:#f5f5f5;
   margin:10px;
   padding:15px;
   border-radius:10px;
@@ -15,8 +16,20 @@ body { font-family: Arial; margin:0; background:#111; color:white; text-align:ce
   width:260px;
   text-align:left;
 }
-button { background:gold; border:none; padding:8px; cursor:pointer; margin-top:5px;}
-.details { display:none; font-size:14px; color:#ccc; }
+
+button {
+  background:gold;
+  border:none;
+  padding:8px;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+.details {
+  display:none;
+  font-size:14px;
+  margin-top:10px;
+}
 </style>
 
 </head>
@@ -26,77 +39,72 @@ button { background:gold; border:none; padding:8px; cursor:pointer; margin-top:5
 <h1>📸 Shivakrisna Photography</h1>
 <h3>📞 9553272893</h3>
 
-<!-- WEDDING -->
 <div class="section"><h2>💍 Wedding Packages</h2><div id="wedding"></div></div>
-
-<!-- CRADLE -->
 <div class="section"><h2>👶 Cradle Packages</h2><div id="cradle"></div></div>
-
-<!-- BIRTHDAY -->
 <div class="section"><h2>🎉 Birthday Packages</h2><div id="birthday"></div></div>
-
-<!-- SAREE -->
 <div class="section"><h2>👗 Saree/Dothi Packages</h2><div id="saree"></div></div>
-
-<!-- CUSTOM -->
 <div class="section"><h2>✨ Customize</h2><div id="custom"></div></div>
 
-<!-- CART -->
-<div class="section"><h2>🛒 Cart</h2><div id="cart"></div><h3 id="total">₹0</h3></div>
+<div class="section">
+<h2>🛒 Cart</h2>
+<div id="cart"></div>
+<h3 id="total">Total ₹0</h3>
+</div>
 
 <script>
 
-// 🔥 WEDDING FULL 1–10
-const wedding=[
-{name:"Package 1 Basic",price:49000,detail:"50 Sheets"},
-{name:"Package 2 Advance",price:74999,detail:"50 Sheets"},
-{name:"Package 3 Plus",price:143999,detail:"80 Sheets"},
-{name:"Package 4 Pro",price:114999,detail:"80 Sheets"},
-{name:"Package 5 Pro Max",price:129999,detail:"80 Sheets"},
-{name:"Package 6 Advanced",price:167999,detail:"100 Sheets"},
-{name:"Package 7 Advanced Pro",price:192999,detail:"100 Sheets"},
-{name:"Package 8 Premium",price:241999,detail:"100 Sheets"},
-{name:"Package 9 Premium+",price:261999,detail:"100 Sheets"},
-{name:"Package 10 Premium Pro",price:279999,detail:"100 Sheets"}
+// 🔥 WEDDING (1–10 FULL)
+const wedding = [
+{name:"Package 1 Basic",price:49000,detail:"50 Sheets",full:"Bride + Groom + Wedding Traditional"},
+{name:"Package 2 Basic to Advance",price:74999,detail:"50 Sheets",full:"Traditional + Candid + Cinematic"},
+{name:"Package 3 Advance Plus",price:143999,detail:"80 Sheets",full:"Candid + Cinematic + LED + Drone"},
+{name:"Package 4 Advance Pro",price:114999,detail:"80 Sheets",full:"Pre Wedding + Full Coverage"},
+{name:"Package 5 Pro Max",price:129999,detail:"80 Sheets",full:"Reception included"},
+{name:"Package 6 Advanced",price:167999,detail:"100 Sheets",full:"LED + Drone + Reception"},
+{name:"Package 7 Advanced Pro",price:192999,detail:"100 Sheets",full:"Cinematic + Candid + Drone"},
+{name:"Package 8 Premium",price:241999,detail:"100 Sheets",full:"Full Premium Coverage"},
+{name:"Package 9 Premium+",price:261999,detail:"100 Sheets",full:"Live Streaming Included"},
+{name:"Package 10 Premium Pro",price:279999,detail:"100 Sheets",full:"Engagement + Full Coverage"}
 ];
 
-// 🎉 BIRTHDAY 11–14
-const birthday=[
-{name:"Basic",price:21000,detail:"30 Sheets"},
-{name:"Basic to Advance",price:29999,detail:"30 Sheets"},
-{name:"Advance",price:44999,detail:"30 Sheets"},
-{name:"Premium",price:69999,detail:"30 Sheets"}
+// 🎉 BIRTHDAY (11–14)
+const birthday = [
+{name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional Coverage"},
+{name:"Basic to Advance",price:29999,detail:"30 Sheets",full:"Baby Shoot Included"},
+{name:"Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
+{name:"Premium",price:69999,detail:"30 Sheets",full:"Candid + Cinematic"}
 ];
 
-// 👶 CRADLE 21–22
-const cradle=[
-{name:"Basic",price:21000,detail:"30 Sheets"},
-{name:"Premium",price:39999,detail:"30 Sheets"}
+// 👶 CRADLE (21–22)
+const cradle = [
+{name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional"},
+{name:"Premium",price:39999,detail:"30 Sheets",full:"Candid + Cinematic"}
 ];
 
-// 👗 SAREE 15–20
-const saree=[
-{name:"Basic",price:21000,detail:"30 Sheets"},
-{name:"Basic 2",price:29999,detail:"30 Sheets"},
-{name:"Advance",price:44999,detail:"30 Sheets"},
-{name:"Advance",price:71999,detail:"50 Sheets"},
-{name:"Advance Plus",price:96999,detail:"50 Sheets"},
-{name:"Premium",price:121999,detail:"50 Sheets"}
+// 👗 SAREE (15–20)
+const saree = [
+{name:"Basic",price:21000,detail:"30 Sheets",full:"Traditional"},
+{name:"Basic",price:29999,detail:"30 Sheets",full:"Haldi + Function"},
+{name:"Advance",price:44999,detail:"30 Sheets",full:"LED + Drone"},
+{name:"Advance",price:71999,detail:"50 Sheets",full:"LED + Drone"},
+{name:"Advance Plus",price:96999,detail:"50 Sheets",full:"Candid + Cinematic"},
+{name:"Premium",price:121999,detail:"50 Sheets",full:"Full Coverage"}
 ];
 
 // CUSTOM
-const custom=[
+const custom = [
 {name:"Album Sheets",price:500},
-{name:"Traditional Photography (per day)",price:5000},
-{name:"Traditional Video (per day)",price:7000},
-{name:"Drone (per day)",price:8000},
-{name:"LED Screen (per day)",price:12000},
-{name:"Pre Wedding Shoot (per day)",price:30000},
-{name:"Cinematic Video (per day)",price:15000},
-{name:"Candid Photography (per day)",price:10000},
-{name:"Baby Shoot (per day)",price:25000},
-{name:"Half Saree/Dothi Shoot (per day)",price:28000}
+{name:"Traditional Photography",price:5000},
+{name:"Traditional Video",price:7000},
+{name:"Drone",price:8000},
+{name:"LED Screen",price:12000},
+{name:"Pre Wedding",price:30000},
+{name:"Cinematic Video",price:15000},
+{name:"Candid Photography",price:10000},
+{name:"Baby Shoot",price:25000},
+{name:"Half Saree/Dothi",price:28000}
 ];
+
 let cart=[];
 
 // RENDER
@@ -110,7 +118,7 @@ html+=`
 <p>${p.detail}</p>
 <button onclick="toggle('${id}${i}')">Details</button>
 <button onclick="add('${p.name}',${p.price})">Add</button>
-<div id="${id}${i}" class="details">Full coverage details included</div>
+<div id="${id}${i}" class="details">${p.full}</div>
 </div>`;
 });
 document.getElementById(id).innerHTML=html;
@@ -129,6 +137,12 @@ html+=`
 </div>`;
 });
 document.getElementById("custom").innerHTML=html;
+}
+
+// TOGGLE
+function toggle(id){
+let el=document.getElementById(id);
+el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
 // ADD
@@ -153,8 +167,8 @@ document.getElementById("total").innerText="Total ₹"+total;
 
 // INIT
 render(wedding,"wedding");
-render(birthday,"birthday");
 render(cradle,"cradle");
+render(birthday,"birthday");
 render(saree,"saree");
 renderCustom();
 
