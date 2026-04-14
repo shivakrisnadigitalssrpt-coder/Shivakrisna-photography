@@ -4,7 +4,7 @@
 <title>Shivakrisna Photography</title>
 
 <style>
-body { font-family: Arial; text-align:center; padding:20px; background:#fff; }
+body { font-family: Arial; text-align:center; padding:20px; }
 
 .grid {
   display:grid;
@@ -17,13 +17,6 @@ body { font-family: Arial; text-align:center; padding:20px; background:#fff; }
   padding:20px;
   border-radius:15px;
   text-align:left;
-}
-
-img {
-  width:100%;
-  height:200px;
-  object-fit:cover;
-  border-radius:10px;
 }
 
 button {
@@ -65,38 +58,21 @@ input { width:90%; padding:8px; margin:5px; }
 <h1>📸 Shivakrisna Photography</h1>
 <p>📞 Cell :- 9553272893</p>
 
-<!-- GALLERY -->
-<h2>📸 Our Work</h2>
-<div class="grid">
-<img src="https://lh3.googleusercontent.com/d/1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM">
-<img src="https://lh3.googleusercontent.com/d/1OQo_N9T6Jbm8Q3ZtnGvESflZWj50Ank2">
-<img src="https://lh3.googleusercontent.com/d/1tu8tQFpztOqne87OjNJwQKqn_LUwuIT0">
-<img src="https://lh3.googleusercontent.com/d/1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe">
-<img src="https://lh3.googleusercontent.com/d/1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ">
-<img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT">
-</div>
-
-<!-- WEDDING -->
-<h2>💍 Wedding Packages</h2>
+<h2>💍 Wedding Packages (Starting ₹50,000)</h2>
 <div id="wedding" class="grid"></div>
 
-<!-- BIRTHDAY -->
-<h2>🎉 Birthday Packages</h2>
-<div id="birthday" class="grid"></div>
-
-<!-- SAREE -->
-<h2>👗 Saree Ceremony</h2>
-<div id="saree" class="grid"></div>
-
-<!-- CRADLE -->
 <h2>👶 Cradle Ceremony</h2>
 <div id="cradle" class="grid"></div>
 
-<!-- CUSTOM -->
+<h2>🎉 Birthday Packages</h2>
+<div id="birthday" class="grid"></div>
+
+<h2>👗 Half Saree / Dothi Ceremony</h2>
+<div id="saree" class="grid"></div>
+
 <h2>✨ Customize Your Package</h2>
 <div id="custom" class="grid"></div>
 
-<!-- CART -->
 <div class="cart">
 <h2>🛒 Cart</h2>
 <div id="cart"></div>
@@ -104,52 +80,67 @@ input { width:90%; padding:8px; margin:5px; }
 <button onclick="openForm()" style="background:#25D366;color:white;">Checkout</button>
 </div>
 
-<!-- FORM -->
 <div id="formBox">
 <h3>Client Details</h3>
 <input id="name" placeholder="Name"><br>
 <input id="phone" placeholder="Phone"><br>
 <input id="location" placeholder="Location"><br>
-<input id="date" placeholder="Event Date"><br>
 <button onclick="sendWhatsApp()">Submit</button>
 <button onclick="closeForm()">Close</button>
 </div>
 
 <script>
 
-// 22 PACKAGES
-const wedding = Array.from({length:10},(_,i)=>({
-title:`Wedding Package ${i+1}`,
-price:50000+(i*20000),
-details:["Full Coverage","Album Included","Candid + Video"]
-}));
+// 🔥 WEDDING (EXACT DATA)
+const wedding = [
+{title:"Package 1 ₹49,000",price:49000,details:["Bride: Traditional","Groom: Traditional","Wedding: Traditional","50 Sheets"]},
+{title:"Package 2 ₹74,999",price:74999,details:["Traditional + Candid + Cinematic","50 Sheets"]},
+{title:"Package 3 ₹89,999",price:89999,details:["Drone + LED","80 Sheets"]},
+{title:"Package 4 ₹1,14,999",price:114999,details:["Pre Wedding + Wedding","80 Sheets"]},
+{title:"Package 5 ₹1,29,999",price:129999,details:["Reception Included","80 Sheets"]},
+{title:"Package 6 ₹1,67,999",price:167999,details:["Drone + LED + Reception","100 Sheets"]},
+{title:"Package 7 ₹1,92,999",price:192999,details:["Candid + Cinematic","100 Sheets"]},
+{title:"Package 8 ₹2,41,999",price:241999,details:["Premium Full","100 Sheets"]},
+{title:"Package 9 ₹2,61,999",price:261999,details:["Live Streaming","100 Sheets"]},
+{title:"Package 10 ₹2,79,999",price:279999,details:["Engagement + Full","100 Sheets"]}
+];
 
+// 🎉 BIRTHDAY
 const birthday = [
-{title:"Birthday 21k",price:21000,details:["Traditional"]},
-{title:"Birthday 29k",price:29999,details:["Baby Shoot"]},
-{title:"Birthday 44k",price:44999,details:["Drone"]},
-{title:"Birthday 69k",price:69999,details:["Cinematic"]}
+{title:"Basic ₹21,000",price:21000,details:["Traditional + 30 Sheets"]},
+{title:"Advance ₹29,999",price:29999,details:["Baby Shoot + 30 Sheets"]},
+{title:"Advance+ ₹44,999",price:44999,details:["Drone + LED"]},
+{title:"Premium ₹69,999",price:69999,details:["Cinematic + Candid"]}
 ];
 
+// 👗 SAREE
 const saree = [
-{title:"Saree 21k",price:21000},
-{title:"Saree 29k",price:29999},
-{title:"Saree 44k",price:44999},
-{title:"Saree 71k",price:71999},
-{title:"Saree 96k",price:96999},
-{title:"Saree 121k",price:121999}
+{title:"Basic ₹21,000",price:21000},
+{title:"Basic ₹29,999",price:29999},
+{title:"Advance ₹44,999",price:44999},
+{title:"Advance ₹71,999",price:71999},
+{title:"Advance+ ₹96,999",price:96999},
+{title:"Premium ₹1,21,999",price:121999}
 ];
 
+// 👶 CRADLE
 const cradle = [
-{title:"Cradle 21k",price:21000},
-{title:"Cradle 39k",price:39999}
+{title:"Basic ₹21,000",price:21000},
+{title:"Premium ₹39,999",price:39999}
 ];
 
+// CUSTOM
 const custom = [
-{name:"Album Sheets",price:500},
-{name:"Traditional Photography",price:5000},
-{name:"Drone",price:8000},
-{name:"LED Screen",price:12000}
+{name:"Album Sheets (₹500)",price:500},
+{name:"Traditional Photography (₹5000)",price:5000},
+{name:"Traditional Video (₹7000)",price:7000},
+{name:"Drone (₹8000)",price:8000},
+{name:"LED Screen (₹12000)",price:12000},
+{name:"Pre Wedding (₹30000)",price:30000},
+{name:"Cinematic Video (₹15000)",price:15000},
+{name:"Candid Photography (₹10000)",price:10000},
+{name:"Baby Shoot (₹25000)",price:25000},
+{name:"Half Saree/Dothi (₹28000)",price:28000}
 ];
 
 let cart=[];
@@ -166,9 +157,8 @@ html+=`
 <button class="add-btn" onclick="add('${p.title}',${p.price})">Add</button>
 
 <div id="${id}${i}" class="details">
-${(p.details||["Standard"]).map(d=>`<p>• ${d}</p>`).join("")}
+${(p.details||["Full Coverage"]).map(d=>`<p>• ${d}</p>`).join("")}
 </div>
-
 </div>`;
 });
 document.getElementById(id).innerHTML=html;
@@ -197,10 +187,8 @@ function updateCart(){
 let html=""; let total=0;
 cart.forEach((c,i)=>{
 total+=c.price;
-html+=`
-<p>${c.name} - ₹${c.price}
-<button class="remove-btn" onclick="removeItem(${i})">Remove</button>
-</p>`;
+html+=`<p>${c.name} - ₹${c.price}
+<button class="remove-btn" onclick="removeItem(${i})">Remove</button></p>`;
 });
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
@@ -231,14 +219,12 @@ updateCart();
 function openForm(){ document.getElementById("formBox").style.display="block"; }
 function closeForm(){ document.getElementById("formBox").style.display="none"; }
 
-// WHATSAPP
 function sendWhatsApp(){
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let location=document.getElementById("location").value;
-let date=document.getElementById("date").value;
 
-let msg=`Name:${name}%0APhone:${phone}%0ALocation:${location}%0ADate:${date}%0A`;
+let msg=`Name:${name}%0APhone:${phone}%0ALocation:${location}%0A`;
 
 cart.forEach(c=>{
 msg+=c.name+" ₹"+c.price+"%0A";
@@ -249,9 +235,9 @@ window.open("https://wa.me/919553272893?text="+msg);
 
 // INIT
 render(wedding,"wedding");
+render(cradle,"cradle");
 render(birthday,"birthday");
 render(saree,"saree");
-render(cradle,"cradle");
 renderCustom();
 
 </script>
