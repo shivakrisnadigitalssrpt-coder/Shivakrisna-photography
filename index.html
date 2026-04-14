@@ -1,126 +1,134 @@
-<style>
-body {
-  margin:0;
-  font-family: Arial;
-  background:black;
-  color:white;
-  text-align:center;
-}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shivakrisna Photography</title>
+  <style>
+    body { font-family: Arial; margin: 0; text-align: center; }
 
-/* HERO SECTION FIX */
-.hero {
-  padding:120px 20px;
-  background:
-    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-    url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486');
-  background-size:cover;
-  background-position:center;
-}
+    .hero {
+      background: black;
+      color: white;
+      padding: 100px 20px;
+    }
 
-.hero h1 {
-  font-size:42px;
-  color:white;
-  text-shadow: 2px 2px 10px black;
-}
+    .section { padding: 40px; }
 
-.hero p {
-  font-size:18px;
-  opacity:0.8;
-}
+    .gallery img {
+      width: 30%;
+      margin: 10px;
+      border-radius: 10px;
+    }
 
-/* GALLERY */
-.gallery img {
-  width:200px;
-  margin:10px;
-  border-radius:10px;
-}
+    .card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      width: 250px;
+    }
 
-/* PACKAGES */
-.packages {
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.card {
-  background:#111;
-  padding:20px;
-  border-radius:10px;
-  width:200px;
-}
-
-/* BUTTON */
-button {
-  background:gold;
-  border:none;
-  padding:10px;
-  cursor:pointer;
-}
-
-/* WHATSAPP */
-.whatsapp {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:green;
-  color:white;
-  padding:15px;
-  border-radius:50%;
-}
-</style>  border:none;
-  padding:10px;
-  cursor:pointer;
-}
-.whatsapp {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:green;
-  color:white;
-  padding:15px;
-  border-radius:50%;
-}
-</style>
+    button {
+      background: green;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <h1>📸 Shivakrisna Photography</h1>
-  <p>Wedding | Birthday | Cradle | Saree</p>
+  <p>For bookings & quotations</p>
+  <h2>📞 9553272893</h2>
 </div>
 
-<h2>📸 Gallery</h2>
-<div class="gallery">
-  <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
-  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-  <img src="https://images.unsplash.com/photo-1529634893364-88c1b2e7f0c6">
-</div>
-
-<h2>💰 Packages</h2>
-<div class="packages">
-  <div class="card">
-    <h3>Basic</h3>
-    <p>₹10,000</p>
-    <button>Add to Cart</button>
-  </div>
-  <div class="card">
-    <h3>Premium</h3>
-    <p>₹25,000</p>
-    <button>Add to Cart</button>
-  </div>
-  <div class="card">
-    <h3>Cinematic</h3>
-    <p>₹50,000</p>
-    <button>Add to Cart</button>
+<!-- GALLERY -->
+<div class="section">
+  <h2>Gallery</h2>
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486">
+    <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9">
   </div>
 </div>
 
-<h2>📞 Contact</h2>
-<p>+91 9553272893</p>
+<!-- PACKAGES -->
+<div class="section">
+  <h2>Packages</h2>
 
-<a class="whatsapp" href="https://wa.me/919553272893">💬</a>
+  <div id="items"></div>
+</div>
+
+<!-- CART -->
+<div class="section">
+  <h2>Your Package</h2>
+  <div id="cart"></div>
+  <h3 id="total">Total: ₹0</h3>
+</div>
+
+<!-- WHATSAPP -->
+<div class="section">
+  <a id="wa" href="#" target="_blank">
+    <button>Send on WhatsApp</button>
+  </a>
+</div>
+
+<script>
+const items = [
+  { name: "Album Sheets", price: 500 },
+  { name: "Traditional Video", price: 7000 },
+  { name: "Drone", price: 8000 },
+  { name: "LED Screen", price: 12000 },
+  { name: "Pre Wedding", price: 30000 },
+  { name: "Cinematic Video", price: 15000 },
+  { name: "Candid Photography", price: 10000 }
+];
+
+let cart = [];
+
+function renderItems() {
+  let html = "";
+  items.forEach((item, i) => {
+    html += `
+      <div class="card">
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+        <button onclick="add(${i})">Add</button>
+      </div>
+    `;
+  });
+  document.getElementById("items").innerHTML = html;
+}
+
+function add(i) {
+  cart.push({ ...items[i], qty: 1 });
+  renderCart();
+}
+
+function renderCart() {
+  let html = "";
+  let total = 0;
+
+  cart.forEach((item) => {
+    total += item.price * item.qty;
+    html += `<p>${item.name} - ₹${item.price}</p>`;
+  });
+
+  document.getElementById("cart").innerHTML = html;
+  document.getElementById("total").innerText = "Total: ₹" + total;
+
+  document.getElementById("wa").href =
+    "https://wa.me/919553272893?text=Total Package Price: ₹" + total;
+}
+
+renderItems();
+</script>
 
 </body>
 </html>
