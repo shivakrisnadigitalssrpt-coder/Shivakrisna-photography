@@ -1,0 +1,126 @@
+import React, { useState } from "react";
+
+export default function ShivakrishnaPhotography() {
+  const [selectedPackageId, setSelectedPackageId] = useState(null);
+  const [cart, setCart] = useState([]);
+
+  // Packages Data
+  const packages = [
+    { id: 1, title: "Package 1 (Basic)", price: 49000, sheets: 50, details: ["Bride: Traditional Photo & Video", "Groom: Traditional Photo & Video", "Wedding: Traditional Coverage"] },
+    { id: 2, title: "Package 2 (Basic To Advance)", price: 74999, sheets: 50, details: ["Wedding: Traditional + Candid + Cinematic"] },
+    { id: 3, title: "Package 3 (Basic To Advance Plus)", price: 89999, sheets: 80, details: ["Wedding: Trad + Candid + Cinematic + Drone + LED"] },
+    { id: 11, title: "Birthday Basic", price: 21000, sheets: 30, details: ["Traditional Photo & Video"] },
+    { id: 15, title: "Saree Basic", price: 21000, sheets: 30, details: ["Traditional Coverage"] },
+    { id: 21, title: "Cradle Basic", price: 21000, sheets: 30, details: ["Traditional Coverage"] },
+    // ... migatha packages ni kuda ide format lo add cheskovachu
+  ];
+
+  // ✅ Add to cart with unique ID (Fixes duplicate key bug)
+  const addToCart = (pkg) => {
+    const uniqueItem = { ...pkg, cartId: Math.random().toString(36).substr(2, 9) };
+    setCart([...cart, uniqueItem]);
+  };
+
+  // ✅ Remove item from cart (New feature)
+  const removeFromCart = (cartId) => {
+    setCart(cart.filter((item) => item.cartId !== cartId));
+  };
+
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  // ✅ WhatsApp message logic (Better formatting)
+  const getWhatsAppLink = () => {
+    const itemNames = cart.map(item => item.title).join(", ");
+    const message = `Hi Shiva, I want to book: ${itemNames}. Total Amount: ₹${total}`;
+    return `https://wa.me/919553272893?text=${encodeURIComponent(message)}`;
+  };
+
+  return (
+    <div className="p-4 md:p-8 bg-gray-50 min-h-screen font-sans">
+      <h1 className="text-3xl font-bold text-center mb-10 text-gray-800 border-b-2 pb-4">
+        Shivakrishna Photography
+      </h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {packages.map((pkg) => (
+          <div key={pkg.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-gray-700">{pkg.title}</h2>
+              <p className="text-2xl font-semibold mt-2 text-green-600">₹{pkg.price.toLocaleString()}</p>
+              <p className="text-gray-500">{pkg.sheets} Sheets Album</p>
+            </div>
+
+            <div className="mt-4">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setSelectedPackageId(selectedPackageId === pkg.id ? null : pkg.id)}
+                  className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded-lg transition"
+                >
+                  {selectedPackageId === pkg.id ? "Hide Details" : "View Details"}
+                </button>
+
+                <button
+                  onClick={() => addToCart(pkg)}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+                >
+                  Add to Cart
+                </button>
+              </div>
+
+              {/* DETAILS SECTION */}
+              {selectedPackageId === pkg.id && (
+                <div className="mt-4 p-3 bg-gray-100 rounded-lg text-sm text-gray-600 animate-pulse">
+                  {pkg.details.map((d, i) => (
+                    <p key={i} className="mb-1">• {d}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CART SUMMARY */}
+      {cart.length > 0 && (
+        <div className="mt-12 p-6 bg-white border-2 border-blue-100 rounded-2xl shadow-xl max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            🛒 Your Selection ({cart.length})
+          </h2>
+
+          <div className="space-y-3">
+            {cart.map((item) => (
+              <div key={item.cartId} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
+                <span className="font-medium text-gray-700">{item.title}</span>
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-600">₹{item.price.toLocaleString()}</span>
+                  <button 
+                    onClick={() => removeFromCart(item.cartId)}
+                    className="text-red-500 hover:text-red-700 font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 border-t pt-4">
+            <div className="flex justify-between text-xl font-bold text-gray-800">
+              <span>Total Bill:</span>
+              <span className="text-blue-600">₹{total.toLocaleString()}</span>
+            </div>
+
+            <a
+              href={getWhatsAppLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block mt-6 bg-green-500 hover:bg-green-600 text-white text-center py-3 rounded-xl font-bold text-lg shadow-lg transition-transform active:scale-95"
+            >
+              Checkout via WhatsApp
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
