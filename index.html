@@ -4,16 +4,16 @@
 <title>Shivakrisna Photography</title>
 
 <style>
-body { font-family: Arial; text-align:center; padding:20px; }
+body { font-family: Arial; text-align:center; padding:20px; background:#fff; }
 
 .grid {
   display:grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
   gap:20px;
 }
 
 .card {
-  background:#f3f3f3;
+  background:#f5f5f5;
   padding:20px;
   border-radius:15px;
   text-align:left;
@@ -38,16 +38,24 @@ button {
 .add-btn { background:green; color:white; }
 .remove-btn { background:red; color:white; }
 
-.details {
-  display:none;
-  margin-top:10px;
-  font-size:14px;
-  background:#fff;
-  padding:10px;
-  border-radius:10px;
-}
+.details { display:none; margin-top:10px; background:#fff; padding:10px; border-radius:10px; }
 
 .cart { background:#eee; padding:20px; margin-top:30px; border-radius:15px; }
+
+#formBox {
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:20px;
+border-radius:15px;
+width:300px;
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+input { width:90%; padding:8px; margin:5px; }
 </style>
 
 </head>
@@ -68,73 +76,107 @@ button {
 <img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT">
 </div>
 
-<!-- PACKAGES -->
+<!-- WEDDING -->
 <h2>💍 Wedding Packages</h2>
 <div id="wedding" class="grid"></div>
 
+<!-- BIRTHDAY -->
+<h2>🎉 Birthday Packages</h2>
+<div id="birthday" class="grid"></div>
+
+<!-- SAREE -->
+<h2>👗 Saree Ceremony</h2>
+<div id="saree" class="grid"></div>
+
+<!-- CRADLE -->
+<h2>👶 Cradle Ceremony</h2>
+<div id="cradle" class="grid"></div>
+
+<!-- CUSTOM -->
+<h2>✨ Customize Your Package</h2>
+<div id="custom" class="grid"></div>
+
+<!-- CART -->
 <div class="cart">
 <h2>🛒 Cart</h2>
 <div id="cart"></div>
 <h3 id="total">Total ₹0</h3>
+<button onclick="openForm()" style="background:#25D366;color:white;">Checkout</button>
+</div>
+
+<!-- FORM -->
+<div id="formBox">
+<h3>Client Details</h3>
+<input id="name" placeholder="Name"><br>
+<input id="phone" placeholder="Phone"><br>
+<input id="location" placeholder="Location"><br>
+<input id="date" placeholder="Event Date"><br>
+<button onclick="sendWhatsApp()">Submit</button>
+<button onclick="closeForm()">Close</button>
 </div>
 
 <script>
 
-const wedding = [
-{
-title:"Package 1 (Basic) ₹49,000",
-price:49000,
-details:[
-"Bride: Traditional Photo & Video",
-"Groom: Traditional Photo & Video",
-"Wedding: Traditional Photo & Video"
-]
-},
-{
-title:"Package 2 ₹74,999",
-price:74999,
-details:[
-"Traditional + Candid + Cinematic",
-"Full Wedding Coverage"
-]
-},
-{
-title:"Package 3 ₹1,43,999",
-price:143999,
-details:[
-"Drone + LED Screen",
-"Cinematic + Candid"
-]
-}
+// 22 PACKAGES
+const wedding = Array.from({length:10},(_,i)=>({
+title:`Wedding Package ${i+1}`,
+price:50000+(i*20000),
+details:["Full Coverage","Album Included","Candid + Video"]
+}));
+
+const birthday = [
+{title:"Birthday 21k",price:21000,details:["Traditional"]},
+{title:"Birthday 29k",price:29999,details:["Baby Shoot"]},
+{title:"Birthday 44k",price:44999,details:["Drone"]},
+{title:"Birthday 69k",price:69999,details:["Cinematic"]}
+];
+
+const saree = [
+{title:"Saree 21k",price:21000},
+{title:"Saree 29k",price:29999},
+{title:"Saree 44k",price:44999},
+{title:"Saree 71k",price:71999},
+{title:"Saree 96k",price:96999},
+{title:"Saree 121k",price:121999}
+];
+
+const cradle = [
+{title:"Cradle 21k",price:21000},
+{title:"Cradle 39k",price:39999}
+];
+
+const custom = [
+{name:"Album Sheets",price:500},
+{name:"Traditional Photography",price:5000},
+{name:"Drone",price:8000},
+{name:"LED Screen",price:12000}
 ];
 
 let cart=[];
 
 // RENDER
-function render(){
+function render(list,id){
 let html="";
-wedding.forEach((p,i)=>{
+list.forEach((p,i)=>{
 html+=`
 <div class="card">
-
 <h3>${p.title}</h3>
 
-<button class="details-btn" onclick="toggle(${i})">Details</button>
+<button class="details-btn" onclick="toggle('${id}${i}')">Details</button>
 <button class="add-btn" onclick="add('${p.title}',${p.price})">Add</button>
 
-<div id="d${i}" class="details">
-${p.details.map(d=>`<p>• ${d}</p>`).join("")}
+<div id="${id}${i}" class="details">
+${(p.details||["Standard"]).map(d=>`<p>• ${d}</p>`).join("")}
 </div>
 
 </div>`;
 });
-
-document.getElementById("wedding").innerHTML=html;
+document.getElementById(id).innerHTML=html;
 }
 
-// TOGGLE DETAILS
-function toggle(i){
-let el=document.getElementById("d"+i);
+// TOGGLE
+function toggle(id){
+let el=document.getElementById(id);
 el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
@@ -153,7 +195,6 @@ updateCart();
 // CART
 function updateCart(){
 let html=""; let total=0;
-
 cart.forEach((c,i)=>{
 total+=c.price;
 html+=`
@@ -161,12 +202,57 @@ html+=`
 <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
 </p>`;
 });
-
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
 }
 
-render();
+// CUSTOM
+function renderCustom(){
+let html="";
+custom.forEach((c,i)=>{
+html+=`
+<div class="card">
+<h3>${c.name}</h3>
+<p>₹${c.price}</p>
+<input id="q${i}" value="1">
+<button onclick="addCustom(${i})">Add</button>
+</div>`;
+});
+document.getElementById("custom").innerHTML=html;
+}
+
+function addCustom(i){
+let qty=parseInt(document.getElementById("q"+i).value)||1;
+cart.push({name:custom[i].name,price:custom[i].price*qty});
+updateCart();
+}
+
+// FORM
+function openForm(){ document.getElementById("formBox").style.display="block"; }
+function closeForm(){ document.getElementById("formBox").style.display="none"; }
+
+// WHATSAPP
+function sendWhatsApp(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let location=document.getElementById("location").value;
+let date=document.getElementById("date").value;
+
+let msg=`Name:${name}%0APhone:${phone}%0ALocation:${location}%0ADate:${date}%0A`;
+
+cart.forEach(c=>{
+msg+=c.name+" ₹"+c.price+"%0A";
+});
+
+window.open("https://wa.me/919553272893?text="+msg);
+}
+
+// INIT
+render(wedding,"wedding");
+render(birthday,"birthday");
+render(saree,"saree");
+render(cradle,"cradle");
+renderCustom();
 
 </script>
 
