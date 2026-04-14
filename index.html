@@ -34,6 +34,22 @@ button {
 .details { display:none; margin-top:10px; font-size:14px; }
 
 .cart { background:#eee; padding:20px; border-radius:15px; margin-top:30px; }
+
+/* FORM */
+#formBox {
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:20px;
+border-radius:15px;
+width:300px;
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+input { width:90%; padding:8px; margin:5px; }
 </style>
 
 </head>
@@ -42,16 +58,16 @@ button {
 
 <h1>📸 Shivakrisna Photography</h1>
 
-<h2>💍 Wedding Packages (1–10)</h2>
+<h2>💍 Wedding Packages</h2>
 <div id="wedding" class="grid"></div>
 
-<h2>👶 Cradle (21–22)</h2>
+<h2>👶 Cradle</h2>
 <div id="cradle" class="grid"></div>
 
-<h2>🎉 Birthday (11–14)</h2>
+<h2>🎉 Birthday</h2>
 <div id="birthday" class="grid"></div>
 
-<h2>👗 Saree / Dothi (15–20)</h2>
+<h2>👗 Saree / Dothi</h2>
 <div id="saree" class="grid"></div>
 
 <h2>✨ Customize</h2>
@@ -61,11 +77,31 @@ button {
 <h2>🛒 Cart</h2>
 <div id="cart"></div>
 <h3 id="total">Total ₹0</h3>
+
+<button onclick="openForm()" style="background:#25D366;color:white;">Checkout</button>
+</div>
+
+<!-- FORM -->
+<div id="formBox">
+<h3>Client Details</h3>
+
+<input id="name" placeholder="Name"><br>
+<input id="phone" placeholder="Phone"><br>
+<input id="location" placeholder="Location"><br>
+
+<input id="bride" placeholder="Bride Function Date"><br>
+<input id="groom" placeholder="Groom Function Date"><br>
+<input id="wed" placeholder="Wedding Date"><br>
+<input id="rec" placeholder="Reception Date"><br>
+
+<button onclick="sendWhatsApp()" style="background:green;color:white;">Submit</button>
+<button onclick="closeForm()">Close</button>
 </div>
 
 <script>
 
-// 💍 WEDDING (1–10)
+// ===== PACKAGES (22) =====
+
 const wedding = [
 {title:"Package 1 ₹49,000",price:49000,details:["Bride,Groom,Wedding Traditional","50 Sheets"]},
 {title:"Package 2 ₹74,999",price:74999,details:["Candid + Cinematic","50 Sheets"]},
@@ -79,7 +115,6 @@ const wedding = [
 {title:"Package 10 ₹2,79,999",price:279999,details:["Engagement + Full","100 Sheets"]}
 ];
 
-// 🎉 BIRTHDAY (11–14)
 const birthday = [
 {title:"Package 11 ₹21,000",price:21000,details:["Traditional + 30 Sheets"]},
 {title:"Package 12 ₹29,999",price:29999,details:["Baby Shoot + 30 Sheets"]},
@@ -87,7 +122,6 @@ const birthday = [
 {title:"Package 14 ₹69,999",price:69999,details:["Cinematic + 30 Sheets"]}
 ];
 
-// 👗 SAREE (15–20)
 const saree = [
 {title:"Package 15 ₹21,000",price:21000,details:["Traditional"]},
 {title:"Package 16 ₹29,999",price:29999,details:["Haldi + Function"]},
@@ -97,7 +131,6 @@ const saree = [
 {title:"Package 20 ₹1,21,999",price:121999,details:["Full Coverage"]}
 ];
 
-// 👶 CRADLE (21–22)
 const cradle = [
 {title:"Package 21 ₹21,000",price:21000,details:["Traditional"]},
 {title:"Package 22 ₹39,999",price:39999,details:["Candid + Cinematic"]}
@@ -119,7 +152,7 @@ const custom = [
 
 let cart=[];
 
-// RENDER
+// ===== RENDER =====
 function render(list,id){
 let html="";
 list.forEach((p,i)=>{
@@ -138,37 +171,41 @@ ${p.details.map(d=>`<p>• ${d}</p>`).join("")}
 document.getElementById(id).innerHTML=html;
 }
 
-// TOGGLE
+// ===== TOGGLE =====
 function toggle(id){
 let el=document.getElementById(id);
 el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
-// ADD
+// ===== ADD =====
 function add(name,price){
 cart.push({name,price});
 updateCart();
 }
 
-// REMOVE
+// ===== REMOVE =====
 function removeItem(i){
 cart.splice(i,1);
 updateCart();
 }
 
-// CART
+// ===== CART =====
 function updateCart(){
 let html=""; let total=0;
+
 cart.forEach((c,i)=>{
 total+=c.price;
-html+=`<p>${c.name} - ₹${c.price}
-<button class="remove-btn" onclick="removeItem(${i})">Remove</button></p>`;
+html+=`
+<p>${c.name} - ₹${c.price}
+<button class="remove-btn" onclick="removeItem(${i})">Remove</button>
+</p>`;
 });
+
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
 }
 
-// CUSTOM
+// ===== CUSTOM =====
 function renderCustom(){
 let html="";
 custom.forEach((c,i)=>{
@@ -187,6 +224,31 @@ function addCustom(i){
 let qty=parseInt(document.getElementById("q"+i).value)||1;
 cart.push({name:custom[i].name,price:custom[i].price*qty});
 updateCart();
+}
+
+// ===== FORM =====
+function openForm(){ document.getElementById("formBox").style.display="block"; }
+function closeForm(){ document.getElementById("formBox").style.display="none"; }
+
+// ===== WHATSAPP =====
+function sendWhatsApp(){
+
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let location=document.getElementById("location").value;
+let bride=document.getElementById("bride").value;
+let groom=document.getElementById("groom").value;
+let wed=document.getElementById("wed").value;
+let rec=document.getElementById("rec").value;
+
+let cartText="";
+cart.forEach(c=>{
+cartText+=c.name+" - ₹"+c.price+"%0A";
+});
+
+let msg=`Booking Details%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0ABride:${bride}%0AGroom:${groom}%0AWedding:${wed}%0AReception:${rec}%0A%0ASelected Packages:%0A${cartText}`;
+
+window.open("https://wa.me/919553272893?text="+msg,"_blank");
 }
 
 // INIT
