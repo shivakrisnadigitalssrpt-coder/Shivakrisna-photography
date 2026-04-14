@@ -1,115 +1,238 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shivakrisna Photography</title>
+<title>Shivakrisna Photography</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #ffffff;
-      padding: 20px;
-      text-align: center;
-    }
+<style>
+body { font-family: Arial; background:#fff; padding:20px; text-align:center; }
 
-    .card {
-      background: #f3f3f3;
-      padding: 20px;
-      margin: 20px auto;
-      border-radius: 15px;
-      width: 300px;
-    }
+.card {
+  background:#f3f3f3;
+  padding:20px;
+  margin:20px auto;
+  border-radius:15px;
+  width:320px;
+  text-align:left;
+}
 
-    button {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 8px;
-      margin: 5px;
-      cursor: pointer;
-    }
+button {
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  margin:5px;
+  cursor:pointer;
+}
 
-    .details-btn {
-      background: #c89b1d;
-      color: white;
-    }
+.details-btn { background:#c89b1d; color:white; }
+.add-btn { background:green; color:white; }
 
-    .add-btn {
-      background: green;
-      color: white;
-    }
+.details { display:none; margin-top:10px; font-size:14px; }
+</style>
 
-    .details {
-      display: none;
-      margin-top: 10px;
-    }
-  </style>
 </head>
 
 <body>
 
-<h1>Shivakrisna Photography</h1>
+<h1>📸 Shivakrisna Photography</h1>
 
-<div id="packages"></div>
+<h2>💍 Wedding Packages (Starting ₹50,000)</h2>
+<div id="wedding"></div>
+
+<h2>👶 Cradle Ceremony Packages</h2>
+<div id="cradle"></div>
+
+<h2>🎉 Birthday Packages</h2>
+<div id="birthday"></div>
+
+<h2>👗 Saree / Dothi Ceremony Packages</h2>
+<div id="saree"></div>
 
 <script>
 
-const packages = [
-  {
-    title: "Package 1 (Basic)",
-    price: "₹49,000",
-    sheets: "50 Sheets",
-    details: [
-      "Bride: Traditional Photography & Videography",
-      "Groom: Traditional Photography & Videography",
-      "Wedding: Traditional Photography & Videography"
-    ]
-  },
-  {
-    title: "Package 2 (Basic To Advance)",
-    price: "₹74,999",
-    sheets: "50 Sheets",
-    details: [
-      "Wedding: Traditional + Candid + Cinematic"
-    ]
-  },
-  {
-    title: "Package 3 (Premium)",
-    price: "₹89,999",
-    sheets: "80 Sheets",
-    details: [
-      "Wedding: Drone + LED + Cinematic"
-    ]
-  }
+// 🔥 WEDDING (FULL DETAILS)
+const wedding = [
+
+{
+title:"Package 1 (Basic) - ₹49,000",
+details:[
+"Bride: Traditional Photography & Videography Coverage",
+"Groom: Traditional Photography & Videography Coverage",
+"Wedding: Traditional Photography & Videography Coverage",
+"Album: 50 Sheets"
+]
+},
+
+{
+title:"Package 2 (Basic To Advance) - ₹74,999",
+details:[
+"Bride: Traditional Coverage",
+"Groom: Traditional Coverage",
+"Wedding: Traditional + Candid + Cinematic Coverage",
+"Album: 50 Sheets"
+]
+},
+
+{
+title:"Package 3 (Advance Plus) - ₹1,43,999",
+details:[
+"Bride: Traditional Coverage",
+"Groom: Traditional Coverage",
+"Wedding: Traditional + Candid + Cinematic + LED + Drone",
+"Album: 80 Sheets"
+]
+},
+
+{
+title:"Package 4 (Advance Pro) - ₹1,14,999",
+details:[
+"Pre Wedding: Candid + Cinematic + Drone",
+"Bride: Traditional Coverage",
+"Groom: Traditional Coverage",
+"Wedding: Full Coverage",
+"Album: 80 Sheets"
+]
+},
+
+{
+title:"Package 5 (Pro Max) - ₹1,29,999",
+details:[
+"Pre Wedding + Wedding + Reception Coverage",
+"Album: 80 Sheets"
+]
+},
+
+{
+title:"Package 6 (Advanced) - ₹1,67,999",
+details:[
+"Pre Wedding + Wedding + Reception + Drone + LED",
+"Album: 100 Sheets"
+]
+},
+
+{
+title:"Package 7 (Advanced Pro) - ₹1,92,999",
+details:[
+"Full Coverage + Cinematic + Candid + Drone",
+"Album: 100 Sheets"
+]
+},
+
+{
+title:"Package 8 (Premium) - ₹2,41,999",
+details:[
+"Pre Wedding + Wedding + Reception Full Premium",
+"Album: 100 Sheets"
+]
+},
+
+{
+title:"Package 9 (Premium) - ₹2,61,999",
+details:[
+"Full Premium + Live Streaming",
+"Album: 100 Sheets"
+]
+},
+
+{
+title:"Package 10 (Premium Pro) - ₹2,79,999",
+details:[
+"Engagement + Pre Wedding + Wedding + Reception Full Coverage",
+"Album: 100 Sheets"
+]
+}
+
 ];
 
-const container = document.getElementById("packages");
-
-packages.forEach((pkg, index) => {
-
-  container.innerHTML += `
-    <div class="card">
-      <h3>${pkg.title}</h3>
-      <p>${pkg.price}</p>
-      <p>${pkg.sheets}</p>
-
-      <button class="details-btn" onclick="toggle(${index})">
-        Details
-      </button>
-
-      <button class="add-btn">
-        Add
-      </button>
-
-      <div id="d${index}" class="details">
-        ${pkg.details.map(d => `<p>${d}</p>`).join("")}
-      </div>
-    </div>
-  `;
-});
-
-function toggle(i){
-  const el = document.getElementById("d"+i);
-  el.style.display = el.style.display === "block" ? "none" : "block";
+// 🎉 BIRTHDAY
+const birthday = [
+{
+title:"Basic - ₹21,000",
+details:["Traditional Coverage + 30 Sheets"]
+},
+{
+title:"Advance - ₹29,999",
+details:["Baby Shoot + Traditional + 30 Sheets"]
+},
+{
+title:"Advance Plus - ₹44,999",
+details:["Drone + LED + Baby Shoot + 30 Sheets"]
+},
+{
+title:"Premium - ₹69,999",
+details:["Candid + Cinematic + Drone + LED + 30 Sheets"]
 }
+];
+
+// 👶 CRADLE
+const cradle = [
+{
+title:"Basic - ₹21,000",
+details:["Traditional Coverage + 30 Sheets"]
+},
+{
+title:"Premium - ₹39,999",
+details:["Candid + Cinematic + 30 Sheets"]
+}
+];
+
+// 👗 SAREE
+const saree = [
+{
+title:"Basic - ₹21,000",
+details:["Traditional + 30 Sheets"]
+},
+{
+title:"Basic 2 - ₹29,999",
+details:["Haldi + Function + 30 Sheets"]
+},
+{
+title:"Advance - ₹44,999",
+details:["Drone + LED + 30 Sheets"]
+},
+{
+title:"Advance Plus - ₹71,999",
+details:["Drone + LED + 50 Sheets"]
+},
+{
+title:"Premium - ₹96,999",
+details:["Candid + Cinematic + Drone + 50 Sheets"]
+},
+{
+title:"Full Premium - ₹1,21,999",
+details:["Full Coverage + Drone + LED + 50 Sheets"]
+}
+];
+
+// 🔥 RENDER FUNCTION
+function render(list,id){
+let html="";
+list.forEach((p,i)=>{
+html+=`
+<div class="card">
+<h3>${p.title}</h3>
+
+<button class="details-btn" onclick="toggle('${id}${i}')">Details</button>
+
+<div id="${id}${i}" class="details">
+${p.details.map(d=>`<p>• ${d}</p>`).join("")}
+</div>
+</div>
+`;
+});
+document.getElementById(id).innerHTML=html;
+}
+
+// TOGGLE
+function toggle(id){
+let el=document.getElementById(id);
+el.style.display = el.style.display==="block" ? "none" : "block";
+}
+
+// INIT
+render(wedding,"wedding");
+render(cradle,"cradle");
+render(birthday,"birthday");
+render(saree,"saree");
 
 </script>
 
