@@ -10,60 +10,42 @@
       padding: 20px;
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
     }
 
+    .section-title {
+      margin-top: 40px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
     .card {
-      background: #ffffff;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    button {
-      padding: 8px 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-
-    .details-btn {
-      background: #333;
-      color: #fff;
-    }
-
-    .add-btn {
-      background: #28a745;
-      color: white;
-    }
-
-    .remove-btn {
-      background: red;
-      color: white;
-    }
-
-    .details {
-      display: none;
-      margin-top: 10px;
-      padding: 10px;
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-
-    #cart {
       background: #fff;
       padding: 15px;
-      border-radius: 10px;
+      margin: 15px 0;
+      border-radius: 12px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     }
 
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
+    button {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .add-btn { background: green; color: white; }
+    .remove-btn { background: red; color: white; }
+
+    .details { display:none; margin-top:10px; }
+
+    #cart {
+      background:#fff;
+      padding:15px;
+      border-radius:10px;
     }
   </style>
 </head>
@@ -71,6 +53,7 @@
 <body>
 
 <h1>📸 Shivakrisna Photography</h1>
+<h2>Wedding Packages Starting at ₹50,000/-</h2>
 
 <div id="packages"></div>
 
@@ -78,92 +61,123 @@
 <div id="cart"></div>
 <h3 id="total"></h3>
 
+<h2>⚙️ Customize Your Package</h2>
+
+<div class="card">
+  Sheets: <input type="number" id="sheets" value="0"><br><br>
+
+  Traditional Video (₹7000/day): <input type="number" id="tv"><br>
+  Drone (₹8000/day): <input type="number" id="drone"><br>
+  LED Screen (₹12000/day): <input type="number" id="led"><br>
+  Pre Wedding (₹30000/day): <input type="number" id="pre"><br>
+  Cinematic Video (₹15000/day): <input type="number" id="cine"><br>
+  Candid Photo (₹10000/day): <input type="number" id="candid"><br>
+  Baby Shoot (₹25000/day): <input type="number" id="baby"><br>
+
+  <br>
+  <button onclick="addCustom()">Add Custom Package</button>
+</div>
+
 <script>
 
-const packages = [
-  {
-    title: "Package 1 (Basic)",
-    price: 49000,
-    sheets: 50,
-    details: [
-      "Bride: Traditional Photo & Video",
-      "Groom: Traditional Photo & Video",
-      "Wedding: Traditional Photo & Video"
-    ]
-  },
-  {
-    title: "Package 2 (Advance)",
-    price: 74999,
-    sheets: 50,
-    details: [
-      "Wedding: Traditional + Candid + Cinematic"
-    ]
-  },
-  {
-    title: "Package 3 (Premium)",
-    price: 89999,
-    sheets: 80,
-    details: [
-      "Wedding: Full Premium Coverage + Drone + LED"
-    ]
-  }
-];
-
 let cart = [];
+
+const packages = [
+
+{title:"Wedding Package 1", price:49000, details:["Bride, Groom, Wedding Coverage"]},
+{title:"Wedding Package 2", price:74999, details:["Traditional + Candid + Cinematic"]},
+{title:"Wedding Package 3", price:143999, details:["Drone + LED + Premium"]},
+{title:"Wedding Package 4", price:114999, details:["Pre Wedding + Drone"]},
+{title:"Wedding Package 5", price:129999, details:["Reception Included"]},
+{title:"Wedding Package 6", price:167999, details:["Advanced Full"]},
+{title:"Wedding Package 7", price:192999, details:["Advanced Pro"]},
+{title:"Wedding Package 8", price:241999, details:["Premium"]},
+{title:"Wedding Package 9", price:261999, details:["Premium + Live"]},
+{title:"Wedding Package 10", price:279999, details:["Engagement Included"]},
+
+{title:"Birthday Package 11", price:21000, details:["Basic"]},
+{title:"Birthday Package 12", price:29999, details:["Baby Shoot"]},
+{title:"Birthday Package 13", price:44999, details:["Drone"]},
+{title:"Birthday Package 14", price:69999, details:["Premium"]},
+
+{title:"Half Saree Package 15", price:21000, details:["Basic"]},
+{title:"Half Saree Package 16", price:29999, details:["Haldi"]},
+{title:"Half Saree Package 17", price:44999, details:["Drone"]},
+{title:"Half Saree Package 18", price:71999, details:["Advance"]},
+{title:"Half Saree Package 19", price:96999, details:["Advance Plus"]},
+{title:"Half Saree Package 20", price:121999, details:["Premium"]},
+
+{title:"Cradle Package 21", price:21000, details:["Basic"]},
+{title:"Cradle Package 22", price:39999, details:["Candid + Cinematic"]}
+
+];
 
 function renderPackages(){
   const container = document.getElementById("packages");
   container.innerHTML = "";
 
-  packages.forEach((pkg, i)=>{
+  packages.forEach((pkg,i)=>{
     container.innerHTML += `
       <div class="card">
         <h3>${pkg.title}</h3>
-        <p><b>Price:</b> ₹${pkg.price}</p>
-        <p><b>Sheets:</b> ${pkg.sheets}</p>
+        <p>₹${pkg.price}</p>
 
-        <button class="details-btn" onclick="toggleDetails(${i})">Details</button>
-        <button class="add-btn" onclick="addToCart(${i})">Add</button>
+        <button onclick="toggle(${i})">Details</button>
+        <button class="add-btn" onclick="add(${i})">Add</button>
 
-        <div id="details-${i}" class="details">
-          ${pkg.details.map(d=>`<p>✔ ${d}</p>`).join("")}
+        <div id="d-${i}" class="details">
+          ${pkg.details.map(d=>`<p>${d}</p>`).join("")}
         </div>
       </div>
     `;
   });
 }
 
-function toggleDetails(i){
-  const el = document.getElementById("details-"+i);
-  el.style.display = el.style.display === "block" ? "none" : "block";
+function toggle(i){
+  let d = document.getElementById("d-"+i);
+  d.style.display = d.style.display==="block"?"none":"block";
 }
 
-function addToCart(i){
+function add(i){
   cart.push(packages[i]);
   renderCart();
 }
 
-function removeFromCart(index){
-  cart.splice(index,1);
+function addCustom(){
+  let total = 0;
+
+  total += document.getElementById("sheets").value * 500;
+  total += document.getElementById("tv").value * 7000;
+  total += document.getElementById("drone").value * 8000;
+  total += document.getElementById("led").value * 12000;
+  total += document.getElementById("pre").value * 30000;
+  total += document.getElementById("cine").value * 15000;
+  total += document.getElementById("candid").value * 10000;
+  total += document.getElementById("baby").value * 25000;
+
+  cart.push({title:"Custom Package", price: total});
   renderCart();
 }
 
 function renderCart(){
-  const c = document.getElementById("cart");
+  let c = document.getElementById("cart");
   c.innerHTML = "";
   let total = 0;
 
-  cart.forEach((item,index)=>{
+  cart.forEach((item,i)=>{
     c.innerHTML += `
-      <div class="cart-item">
-        <span>${item.title} - ₹${item.price}</span>
-        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-      </div>
+      <p>${item.title} - ₹${item.price}
+      <button class="remove-btn" onclick="removeItem(${i})">X</button></p>
     `;
     total += item.price;
   });
 
   document.getElementById("total").innerText = "Total: ₹"+total;
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  renderCart();
 }
 
 renderPackages();
