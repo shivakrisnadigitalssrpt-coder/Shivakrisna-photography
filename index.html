@@ -8,7 +8,7 @@ body { font-family: Arial; background:#fff; padding:20px; text-align:center; }
 
 .grid {
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
   gap:20px;
 }
 
@@ -18,6 +18,15 @@ body { font-family: Arial; background:#fff; padding:20px; text-align:center; }
   border-radius:15px;
   text-align:left;
 }
+
+img {
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:12px;
+  transition:0.3s;
+}
+img:hover { transform:scale(1.05); }
 
 button {
   padding:8px 12px;
@@ -31,11 +40,9 @@ button {
 .add-btn { background:green; color:white; }
 .remove-btn { background:red; color:white; }
 
-.details { display:none; margin-top:10px; font-size:14px; }
+.details { display:none; margin-top:10px; }
 
 .cart { background:#eee; padding:20px; border-radius:15px; margin-top:30px; }
-
-img { width:100%; height:200px; object-fit:cover; border-radius:12px; }
 
 #formBox {
 display:none;
@@ -60,16 +67,16 @@ input { width:90%; padding:8px; margin:5px; }
 <h1>📸 Shivakrisna Photography</h1>
 <p style="font-size:18px; color:#555;">📞 Cell :- 9553272893</p>
 
-<!-- GALLERY -->
 <h2>📸 Our Work</h2>
+
 <div class="grid">
 
-<img src="https://drive.google.com/uc?export=view&id=1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM">
-<img src="https://drive.google.com/uc?export=view&id=1OQo_N9T6Jbm8Q3ZtnGvESflZWj50Ank2">
-<img src="https://drive.google.com/uc?export=view&id=1tu8tQFpztOqne87OjNJwQKqn_LUwuIT0">
-<img src="https://drive.google.com/uc?export=view&id=1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe">
-<img src="https://drive.google.com/uc?export=view&id=1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ">
-<img src="https://drive.google.com/uc?export=view&id=1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT">
+<img src="https://lh3.googleusercontent.com/d/1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM">
+<img src="https://lh3.googleusercontent.com/d/1OQo_N9T6Jbm8Q3ZtnGvESflZWj50Ank2">
+<img src="https://lh3.googleusercontent.com/d/1tu8tQFpztOqne87OjNJwQKqn_LUwuIT0">
+<img src="https://lh3.googleusercontent.com/d/1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe">
+<img src="https://lh3.googleusercontent.com/d/1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ">
+<img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT">
 
 </div>
 
@@ -85,9 +92,6 @@ input { width:90%; padding:8px; margin:5px; }
 <h2>👗 Saree / Dothi</h2>
 <div id="saree" class="grid"></div>
 
-<h2>✨ Customize</h2>
-<div id="custom" class="grid"></div>
-
 <div class="cart">
 <h2>🛒 Cart</h2>
 <div id="cart"></div>
@@ -95,56 +99,49 @@ input { width:90%; padding:8px; margin:5px; }
 <button onclick="openForm()" style="background:#25D366;color:white;">Checkout</button>
 </div>
 
-<!-- FORM -->
 <div id="formBox">
 <h3>Client Details</h3>
-
 <input id="name" placeholder="Name"><br>
 <input id="phone" placeholder="Phone"><br>
 <input id="location" placeholder="Location"><br>
-
-<input id="bride" placeholder="Bride Date"><br>
-<input id="groom" placeholder="Groom Date"><br>
-<input id="wed" placeholder="Wedding Date"><br>
-<input id="rec" placeholder="Reception Date"><br>
-
-<button onclick="sendWhatsApp()" style="background:green;color:white;">Submit</button>
+<button onclick="sendWhatsApp()">Submit</button>
 <button onclick="closeForm()">Close</button>
 </div>
 
 <script>
 
-const wedding = Array.from({length:10},(_,i)=>({
-title:`Package ${i+1}`,
-price:50000+(i*20000),
-details:["Full Coverage","Album Included"]
-}));
+const wedding = [
+{title:"Package 1 ₹49,000",price:49000},
+{title:"Package 2 ₹74,999",price:74999},
+{title:"Package 3 ₹1,43,999",price:143999},
+{title:"Package 4 ₹1,14,999",price:114999},
+{title:"Package 5 ₹1,29,999",price:129999},
+{title:"Package 6 ₹1,67,999",price:167999},
+{title:"Package 7 ₹1,92,999",price:192999},
+{title:"Package 8 ₹2,41,999",price:241999},
+{title:"Package 9 ₹2,61,999",price:261999},
+{title:"Package 10 ₹2,79,999",price:279999}
+];
 
 const birthday = [
-{title:"Package 11 ₹21,000",price:21000,details:["Traditional"]},
-{title:"Package 12 ₹29,999",price:29999,details:["Baby Shoot"]},
-{title:"Package 13 ₹44,999",price:44999,details:["Drone"]},
-{title:"Package 14 ₹69,999",price:69999,details:["Cinematic"]}
+{title:"Birthday ₹21,000",price:21000},
+{title:"Birthday ₹29,999",price:29999},
+{title:"Birthday ₹44,999",price:44999},
+{title:"Birthday ₹69,999",price:69999}
 ];
 
 const saree = [
-{title:"Package 15 ₹21,000",price:21000},
-{title:"Package 16 ₹29,999",price:29999},
-{title:"Package 17 ₹44,999",price:44999},
-{title:"Package 18 ₹71,999",price:71999},
-{title:"Package 19 ₹96,999",price:96999},
-{title:"Package 20 ₹1,21,999",price:121999}
+{title:"Saree ₹21,000",price:21000},
+{title:"Saree ₹29,999",price:29999},
+{title:"Saree ₹44,999",price:44999},
+{title:"Saree ₹71,999",price:71999},
+{title:"Saree ₹96,999",price:96999},
+{title:"Saree ₹1,21,999",price:121999}
 ];
 
 const cradle = [
-{title:"Package 21 ₹21,000",price:21000},
-{title:"Package 22 ₹39,999",price:39999}
-];
-
-const custom = [
-{name:"Album Sheets",price:500},
-{name:"Drone",price:8000},
-{name:"Candid Photography",price:10000}
+{title:"Cradle ₹21,000",price:21000},
+{title:"Cradle ₹39,999",price:39999}
 ];
 
 let cart=[];
@@ -155,19 +152,10 @@ list.forEach((p,i)=>{
 html+=`
 <div class="card">
 <h3>${p.title}</h3>
-<button class="details-btn" onclick="toggle('${id}${i}')">Details</button>
 <button class="add-btn" onclick="add('${p.title}',${p.price})">Add</button>
-<div id="${id}${i}" class="details">
-${(p.details||["Standard Coverage"]).map(d=>`<p>• ${d}</p>`).join("")}
-</div>
 </div>`;
 });
 document.getElementById(id).innerHTML=html;
-}
-
-function toggle(id){
-let el=document.getElementById(id);
-el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
 function add(name,price){
@@ -191,26 +179,6 @@ document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
 }
 
-function renderCustom(){
-let html="";
-custom.forEach((c,i)=>{
-html+=`
-<div class="card">
-<h3>${c.name}</h3>
-<p>₹${c.price}</p>
-<input id="q${i}" value="1">
-<button onclick="addCustom(${i})">Add</button>
-</div>`;
-});
-document.getElementById("custom").innerHTML=html;
-}
-
-function addCustom(i){
-let qty=parseInt(document.getElementById("q"+i).value)||1;
-cart.push({name:custom[i].name,price:custom[i].price*qty});
-updateCart();
-}
-
 function openForm(){document.getElementById("formBox").style.display="block";}
 function closeForm(){document.getElementById("formBox").style.display="none";}
 
@@ -232,7 +200,6 @@ render(wedding,"wedding");
 render(cradle,"cradle");
 render(birthday,"birthday");
 render(saree,"saree");
-renderCustom();
 
 </script>
 
