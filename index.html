@@ -19,15 +19,12 @@ body { font-family: Arial; text-align:center; padding:20px; }
   text-align:left;
 }
 
-img {
+img, video {
   width:100%;
   height:200px;
   object-fit:cover;
   border-radius:10px;
-  cursor:pointer;
-  transition:0.3s;
 }
-img:hover { transform:scale(1.05); }
 
 button {
   padding:6px 10px;
@@ -45,22 +42,6 @@ button {
 
 .cart { background:#eee; padding:20px; margin-top:30px; border-radius:15px; }
 
-#formBox {
-display:none;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:20px;
-border-radius:15px;
-width:300px;
-box-shadow:0 0 20px rgba(0,0,0,0.4);
-}
-
-input { width:90%; padding:8px; margin:5px; }
-
-/* ZOOM */
 #popup {
 display:none;
 position:fixed;
@@ -72,12 +53,7 @@ background:rgba(0,0,0,0.9);
 justify-content:center;
 align-items:center;
 }
-
-#popup img {
-max-width:90%;
-max-height:90%;
-border-radius:10px;
-}
+#popup img { max-width:90%; max-height:90%; }
 </style>
 
 </head>
@@ -87,211 +63,129 @@ border-radius:10px;
 <h1>📸 Shivakrisna Photography</h1>
 <p>📞 Cell :- 9553272893</p>
 
-<!-- 📸 GALLERY -->
+<!-- GALLERY -->
 <h2>📸 Our Work</h2>
 <div class="grid">
-
 <img src="https://lh3.googleusercontent.com/d/1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1OQo_N9T6Jbm8Q3ZtnGvESflZWj50Ank2" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1tu8tQFpztOqne87OjNJwQKqn_LUwuIT0" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT" onclick="openPopup(this.src)">
-
 </div>
 
-<!-- 🎵 SONGS -->
-<h2>🎵 Pre Wedding Songs</h2>
+<!-- VIDEOS -->
+<h2>🎥 Pre Wedding Videos</h2>
 <div class="grid">
-
-<iframe width="100%" height="200" src="https://www.youtube.com/embed/5Eqb_-j3FDA" frameborder="0" allowfullscreen></iframe>
-
-<iframe width="100%" height="200" src="https://www.youtube.com/embed/kXfXf-8c6fE" frameborder="0" allowfullscreen></iframe>
-
-<iframe width="100%" height="200" src="https://www.youtube.com/embed/2Vv-BfVoq4g" frameborder="0" allowfullscreen></iframe>
-
+<video controls src="https://docs.google.com/uc?export=download&id=1QKi2fBt4GSKJHt2k8Alb1kdOsw0PLGon"></video>
+<video controls src="https://docs.google.com/uc?export=download&id=1kvFZUAHLvt_q-jM9twlfq4XxzzCrA0ca"></video>
+<video controls src="https://docs.google.com/uc?export=download&id=1DZ_-otx51zycpwmS_RvxRt-SB005ETW2"></video>
+<video controls src="https://docs.google.com/uc?export=download&id=1OeTSCW7gwWuurpeRl8wDXxn6SoR_DGWM"></video>
+<video controls src="https://docs.google.com/uc?export=download&id=1Sg41jrdtQ_1-9GBjvEVH3kxeU-I1FbmO"></video>
+<video controls src="https://docs.google.com/uc?export=download&id=1AucUC3CAyfhtGfONTBXec_oguiiPf1QD"></video>
 </div>
 
-<!-- 💍 WEDDING -->
-<h2>💍 Wedding Packages (Starting ₹50,000)</h2>
+<!-- PACKAGES -->
+<h2>💍 Wedding Packages</h2>
 <div id="wedding" class="grid"></div>
 
-<!-- 👶 CRADLE -->
-<h2>👶 Cradle Ceremony</h2>
-<div id="cradle" class="grid"></div>
-
-<!-- 🎉 BIRTHDAY -->
 <h2>🎉 Birthday Packages</h2>
 <div id="birthday" class="grid"></div>
 
-<!-- 👗 SAREE -->
-<h2>👗 Half Saree / Dothi Ceremony</h2>
+<h2>👗 Half Saree Ceremony</h2>
 <div id="saree" class="grid"></div>
 
-<!-- ✨ CUSTOM -->
-<h2>✨ Customize Your Package</h2>
-<div id="custom" class="grid"></div>
+<h2>👶 Cradle Ceremony</h2>
+<div id="cradle" class="grid"></div>
 
-<!-- 🛒 CART -->
+<!-- CART -->
 <div class="cart">
 <h2>🛒 Cart</h2>
 <div id="cart"></div>
 <h3 id="total">Total ₹0</h3>
-<button onclick="openForm()" style="background:#25D366;color:white;">Checkout</button>
-</div>
-
-<!-- 📋 FORM -->
-<div id="formBox">
-<h3>Client Details</h3>
-<input id="name" placeholder="Name"><br>
-<input id="phone" placeholder="Phone"><br>
-<input id="location" placeholder="Location"><br>
-<button onclick="sendWhatsApp()">Submit</button>
-<button onclick="closeForm()">Close</button>
-</div>
-
-<!-- 🔥 ZOOM -->
-<div id="popup">
-<span onclick="closePopup()" style="position:absolute; top:20px; right:30px; font-size:30px; color:white; cursor:pointer;">✖</span>
-<img id="popupImg">
+<button onclick="checkout()" style="background:#25D366;color:white;">Checkout</button>
 </div>
 
 <script>
 
-// 🔥 WEDDING
+// 🔥 FULL 22 PACKAGES
 const wedding = [
-{title:"Package 1 ₹49,000",price:49000,details:["Bride Traditional","Groom Traditional","Wedding Traditional","50 Sheets"]},
-{title:"Package 2 ₹74,999",price:74999,details:["Candid + Cinematic","50 Sheets"]},
-{title:"Package 3 ₹89,999",price:89999,details:["Drone + LED","80 Sheets"]},
-{title:"Package 4 ₹1,14,999",price:114999,details:["Pre Wedding","80 Sheets"]},
-{title:"Package 5 ₹1,29,999",price:129999,details:["Reception Included","80 Sheets"]},
-{title:"Package 6 ₹1,67,999",price:167999,details:["Drone + LED","100 Sheets"]},
-{title:"Package 7 ₹1,92,999",price:192999,details:["Candid + Cinematic","100 Sheets"]},
-{title:"Package 8 ₹2,41,999",price:241999,details:["Premium","100 Sheets"]},
-{title:"Package 9 ₹2,61,999",price:261999,details:["Live Streaming","100 Sheets"]},
-{title:"Package 10 ₹2,79,999",price:279999,details:["Engagement","100 Sheets"]}
+{title:"Package 1 ₹49,000",price:49000},
+{title:"Package 2 ₹74,999",price:74999},
+{title:"Package 3 ₹89,999",price:89999},
+{title:"Package 4 ₹1,14,999",price:114999},
+{title:"Package 5 ₹1,29,999",price:129999},
+{title:"Package 6 ₹1,67,999",price:167999},
+{title:"Package 7 ₹1,92,999",price:192999},
+{title:"Package 8 ₹2,41,999",price:241999},
+{title:"Package 9 ₹2,61,999",price:261999},
+{title:"Package 10 ₹2,79,999",price:279999}
 ];
 
-// 🎉 BIRTHDAY
 const birthday = [
 {title:"Basic ₹21,000",price:21000},
-{title:"Advance ₹29,999",price:29999},
-{title:"Advance+ ₹44,999",price:44999},
+{title:"Basic ₹29,999",price:29999},
+{title:"Advance ₹44,999",price:44999},
 {title:"Premium ₹69,999",price:69999}
 ];
 
-// 👗 SAREE
 const saree = [
 {title:"Basic ₹21,000",price:21000},
 {title:"Basic ₹29,999",price:29999},
 {title:"Advance ₹44,999",price:44999},
 {title:"Advance ₹71,999",price:71999},
-{title:"Advance+ ₹96,999",price:96999},
+{title:"Advance ₹96,999",price:96999},
 {title:"Premium ₹1,21,999",price:121999}
 ];
 
-// 👶 CRADLE
 const cradle = [
 {title:"Basic ₹21,000",price:21000},
 {title:"Premium ₹39,999",price:39999}
 ];
 
-// CUSTOM
-const custom = [
-{name:"Album Sheets ₹500",price:500},
-{name:"Traditional Photography ₹5000",price:5000},
-{name:"Traditional Video ₹7000",price:7000},
-{name:"Drone ₹8000",price:8000},
-{name:"LED Screen ₹12000",price:12000}
-];
-
 let cart=[];
 
-// RENDER
+// RENDER FUNCTION
 function render(list,id){
 let html="";
 list.forEach((p,i)=>{
 html+=`
 <div class="card">
 <h3>${p.title}</h3>
-
-<button class="details-btn" onclick="toggle('${id}${i}')">Details</button>
-<button class="add-btn" onclick="add('${p.title}',${p.price})">Add</button>
-
-<div id="${id}${i}" class="details">
-${(p.details||["Full Coverage"]).map(d=>`<p>• ${d}</p>`).join("")}
-</div>
+<button class="add-btn" onclick="add('${p.title}',${p.price})">Add to Cart</button>
 </div>`;
 });
 document.getElementById(id).innerHTML=html;
 }
 
-// TOGGLE
-function toggle(id){
-let el=document.getElementById(id);
-el.style.display = el.style.display==="block" ? "none" : "block";
-}
-
-// ADD
+// ADD CART
 function add(name,price){
 cart.push({name,price});
 updateCart();
 }
 
-// REMOVE
-function removeItem(i){
-cart.splice(i,1);
-updateCart();
-}
-
-// CART
+// UPDATE CART
 function updateCart(){
 let html=""; let total=0;
 cart.forEach((c,i)=>{
 total+=c.price;
 html+=`<p>${c.name} - ₹${c.price}
-<button class="remove-btn" onclick="removeItem(${i})">Remove</button></p>`;
+<button onclick="remove(${i})">Remove</button></p>`;
 });
 document.getElementById("cart").innerHTML=html;
 document.getElementById("total").innerText="Total ₹"+total;
 }
 
-// CUSTOM
-function renderCustom(){
-let html="";
-custom.forEach((c,i)=>{
-html+=`
-<div class="card">
-<h3>${c.name}</h3>
-<p>₹${c.price}</p>
-<input id="q${i}" value="1">
-<button onclick="addCustom(${i})">Add</button>
-</div>`;
-});
-document.getElementById("custom").innerHTML=html;
-}
-
-function addCustom(i){
-let qty=parseInt(document.getElementById("q"+i).value)||1;
-cart.push({name:custom[i].name,price:custom[i].price*qty});
+// REMOVE
+function remove(i){
+cart.splice(i,1);
 updateCart();
 }
 
-// FORM
-function openForm(){ document.getElementById("formBox").style.display="block"; }
-function closeForm(){ document.getElementById("formBox").style.display="none"; }
-
-function sendWhatsApp(){
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let location=document.getElementById("location").value;
-
-let msg=`Name:${name}%0APhone:${phone}%0ALocation:${location}%0A`;
-
-cart.forEach(c=>{
-msg+=c.name+" ₹"+c.price+"%0A";
-});
-
+// CHECKOUT
+function checkout(){
+let msg="Booking Details:%0A";
+cart.forEach(c=> msg+=c.name+" ₹"+c.price+"%0A");
 window.open("https://wa.me/919553272893?text="+msg);
 }
 
@@ -306,12 +200,15 @@ document.getElementById("popup").style.display="none";
 
 // INIT
 render(wedding,"wedding");
-render(cradle,"cradle");
 render(birthday,"birthday");
 render(saree,"saree");
-renderCustom();
+render(cradle,"cradle");
 
 </script>
+
+<div id="popup" onclick="closePopup()">
+<img id="popupImg">
+</div>
 
 </body>
 </html>
