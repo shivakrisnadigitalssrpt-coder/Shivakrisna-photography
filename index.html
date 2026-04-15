@@ -43,6 +43,7 @@ button {
 
 .details-btn { background:#c89b1d; color:white; }
 .add-btn { background:green; color:white; }
+.remove-btn { background:red; color:white; }
 
 .details {
   display:none;
@@ -64,9 +65,14 @@ background:white;
 padding:20px;
 border-radius:15px;
 width:300px;
+z-index:999;
 }
 
-input { width:90%; padding:8px; margin:5px; }
+input {
+width:90%;
+padding:8px;
+margin:5px;
+}
 
 /* ZOOM */
 #popup {
@@ -80,7 +86,10 @@ background:rgba(0,0,0,0.9);
 justify-content:center;
 align-items:center;
 }
-#popup img { max-width:90%; max-height:90%; }
+#popup img {
+max-width:90%;
+max-height:90%;
+}
 </style>
 
 </head>
@@ -88,9 +97,9 @@ align-items:center;
 <body>
 
 <h1>📸 Shivakrisna Photography</h1>
-<p>📞 9553272893</p>
+<p>📞 Cell :- 9553272893</p>
 
-<!-- GALLERY -->
+<!-- 📸 GALLERY -->
 <h2>📸 Our Work</h2>
 <div class="grid">
 <img src="https://lh3.googleusercontent.com/d/1cmRlEFSQats6Nzp0-uSj2EU1GYkvhTKM" onclick="openPopup(this.src)">
@@ -101,7 +110,7 @@ align-items:center;
 <img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT" onclick="openPopup(this.src)">
 </div>
 
-<!-- VIDEOS -->
+<!-- 🎥 VIDEOS -->
 <h2>🎥 Pre Wedding Videos</h2>
 <div class="grid">
 <iframe src="https://drive.google.com/file/d/1QKi2fBt4GSKJHt2k8Alb1kdOsw0PLGon/preview"></iframe>
@@ -112,23 +121,23 @@ align-items:center;
 <iframe src="https://drive.google.com/file/d/1AucUC3CAyfhtGfONTBXec_oguiiPf1QD/preview"></iframe>
 </div>
 
-<!-- WEDDING -->
+<!-- 💍 WEDDING -->
 <h2>💍 Wedding Packages</h2>
 <div id="wedding" class="grid"></div>
 
-<!-- BIRTHDAY -->
+<!-- 🎉 BIRTHDAY -->
 <h2>🎉 Birthday Packages</h2>
 <div id="birthday" class="grid"></div>
 
-<!-- SAREE -->
+<!-- 👗 SAREE -->
 <h2>👗 Half Saree Ceremony</h2>
 <div id="saree" class="grid"></div>
 
-<!-- CRADLE -->
+<!-- 👶 CRADLE -->
 <h2>👶 Cradle Ceremony</h2>
 <div id="cradle" class="grid"></div>
 
-<!-- CART -->
+<!-- 🛒 CART -->
 <div class="cart">
 <h2>🛒 Cart</h2>
 <div id="cart"></div>
@@ -136,29 +145,42 @@ align-items:center;
 <button onclick="openForm()" style="background:#25D366;color:white;">Checkout</button>
 </div>
 
-<!-- FORM -->
+<!-- 📋 FULL FORM -->
 <div id="formBox">
+
+<h3>Client Details</h3>
+
 <input id="cname" placeholder="Client Name">
 <input id="cnumber" placeholder="Mobile Number">
+
+<input id="eng" placeholder="Engagement Date">
+<input id="bride" placeholder="Bride Date">
+<input id="groom" placeholder="Groom Date">
 <input id="wed" placeholder="Wedding Date">
-<input id="cloc" placeholder="Location">
-<button onclick="sendWhatsApp()">Submit</button>
+<input id="rec" placeholder="Reception Date">
+
+<input id="preloc" placeholder="Pre Wedding Location">
+<input id="cloc" placeholder="Client Location">
+
+<button onclick="sendWhatsApp()" style="background:green;color:white;">Submit</button>
+<button onclick="closeForm()">Close</button>
+
 </div>
 
 <script>
 
-// REAL 22 PACKAGES
+// 🔥 FULL DATA
 const wedding = [
 {title:"Package 1 ₹49,000",price:49000,details:["Bride Traditional","Groom Traditional","Wedding Traditional"]},
-{title:"Package 2 ₹74,999",price:74999,details:["Traditional + Candid + Cinematic"]},
-{title:"Package 3 ₹89,999",price:89999,details:["Drone + LED + Candid"]},
-{title:"Package 4 ₹1,14,999",price:114999,details:["Pre Wedding + Wedding"]},
-{title:"Package 5 ₹1,29,999",price:129999,details:["Reception Included"]},
-{title:"Package 6 ₹1,44,999",price:144999,details:["Advanced"]},
-{title:"Package 7 ₹1,69,999",price:169999,details:["Advanced Pro"]},
-{title:"Package 8 ₹2,19,999",price:219999,details:["Premium"]},
-{title:"Package 9 ₹2,39,999",price:239999,details:["Live Streaming"]},
-{title:"Package 10 ₹2,79,999",price:279999,details:["Full Coverage"]}
+{title:"Package 2 ₹74,999",price:74999,details:["Candid + Cinematic"]},
+{title:"Package 3 ₹89,999",price:89999,details:["Drone + LED"]},
+{title:"Package 4 ₹1,14,999",price:114999,details:["Pre Wedding"]},
+{title:"Package 5 ₹1,29,999",price:129999,details:["Reception"]},
+{title:"Package 6 ₹1,44,999",price:144999},
+{title:"Package 7 ₹1,69,999",price:169999},
+{title:"Package 8 ₹2,19,999",price:219999},
+{title:"Package 9 ₹2,39,999",price:239999},
+{title:"Package 10 ₹2,79,999",price:279999}
 ];
 
 const birthday = [
@@ -184,17 +206,21 @@ const cradle = [
 
 let cart=[];
 
+// RENDER
 function render(list,id){
 let html="";
 list.forEach((p,i)=>{
 html+=`
 <div class="card">
 <h3>${p.title}</h3>
+
 <button class="details-btn" onclick="toggle('${id}${i}')">Details</button>
 <button class="add-btn" onclick="add('${p.title}',${p.price})">Add</button>
+
 <div id="${id}${i}" class="details">
 ${(p.details||["Full Coverage"]).map(d=>`<p>• ${d}</p>`).join("")}
 </div>
+
 </div>`;
 });
 document.getElementById(id).innerHTML=html;
@@ -226,12 +252,42 @@ cart.splice(i,1);
 updateCart();
 }
 
-function openForm(){ formBox.style.display="block"; }
+// FORM
+function openForm(){ document.getElementById("formBox").style.display="block"; }
+function closeForm(){ document.getElementById("formBox").style.display="none"; }
 
+// WHATSAPP
 function sendWhatsApp(){
-let msg=`Name:${cname.value}%0A`;
-cart.forEach(c=> msg+=c.name+"%0A");
+
+let msg = `📸 Shivakrisna Photography Booking%0A%0A
+Name: ${cname.value}%0A
+Phone: ${cnumber.value}%0A%0A
+
+Engagement: ${eng.value}%0A
+Bride: ${bride.value}%0A
+Groom: ${groom.value}%0A
+Wedding: ${wed.value}%0A
+Reception: ${rec.value}%0A%0A
+
+Pre Wedding Location: ${preloc.value}%0A
+Client Location: ${cloc.value}%0A%0A
+
+Selected Packages:%0A`;
+
+cart.forEach(c=>{
+msg += c.name + " ₹" + c.price + "%0A";
+});
+
 window.open("https://wa.me/919553272893?text="+msg);
+}
+
+// ZOOM
+function openPopup(src){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popupImg").src=src;
+}
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
 
 // INIT
