@@ -14,7 +14,7 @@ body { font-family: Arial; text-align:center; padding:20px; }
 
 .card {
   background:#f5f5f5;
-  padding:20px;
+  padding:15px;
   border-radius:15px;
   text-align:left;
 }
@@ -60,7 +60,7 @@ box-shadow:0 0 20px rgba(0,0,0,0.4);
 
 input { width:90%; padding:8px; margin:5px; }
 
-/* ZOOM POPUP */
+/* ZOOM */
 #popup {
 display:none;
 position:fixed;
@@ -77,12 +77,6 @@ align-items:center;
 max-width:90%;
 max-height:90%;
 border-radius:10px;
-animation:zoom 0.3s ease;
-}
-
-@keyframes zoom {
-from {transform:scale(0.8);}
-to {transform:scale(1);}
 }
 </style>
 
@@ -103,6 +97,18 @@ to {transform:scale(1);}
 <img src="https://lh3.googleusercontent.com/d/1wQOQhiPr8YDjjGVU1gsTSL8Wzy8JPKWe" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1_MoZ2P2ZaDGynWQyBnv-KopIb6Im3UrZ" onclick="openPopup(this.src)">
 <img src="https://lh3.googleusercontent.com/d/1zKIN9danJ9UcQsNTh91nMqN6GVU3FtIT" onclick="openPopup(this.src)">
+
+</div>
+
+<!-- 🎵 SONGS -->
+<h2>🎵 Pre Wedding Songs</h2>
+<div class="grid">
+
+<iframe width="100%" height="200" src="https://www.youtube.com/embed/5Eqb_-j3FDA" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="100%" height="200" src="https://www.youtube.com/embed/kXfXf-8c6fE" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="100%" height="200" src="https://www.youtube.com/embed/2Vv-BfVoq4g" frameborder="0" allowfullscreen></iframe>
 
 </div>
 
@@ -144,7 +150,7 @@ to {transform:scale(1);}
 <button onclick="closeForm()">Close</button>
 </div>
 
-<!-- 🔥 ZOOM POPUP -->
+<!-- 🔥 ZOOM -->
 <div id="popup">
 <span onclick="closePopup()" style="position:absolute; top:20px; right:30px; font-size:30px; color:white; cursor:pointer;">✖</span>
 <img id="popupImg">
